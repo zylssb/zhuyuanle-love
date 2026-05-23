@@ -92,44 +92,45 @@
             z-index: 5;
         }
 
-        /* ===== 角色系统 - 全新设计 ===== */
+        /* ===== 二次元萝莉风格角色系统 ===== */
         #character-layer {
             position: absolute;
-            bottom: 200px;
+            bottom: 180px;
             left: 0;
             width: 100%;
-            height: 55%;
+            height: 60%;
             z-index: 10;
-            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
         }
 
         .character {
             position: absolute;
-            width: 280px;
-            height: 500px;
+            width: 200px;
+            height: 350px;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform-origin: bottom center;
         }
 
-        .character.left { left: 10%; animation: charEnterLeft 0.8s ease-out; }
+        .character.left { left: 12%; animation: charEnterLeft 0.8s ease-out; }
         .character.center { left: 50%; transform: translateX(-50%); animation: charEnterCenter 0.8s ease-out; }
-        .character.right { right: 10%; animation: charEnterRight 0.8s ease-out; }
+        .character.right { right: 12%; animation: charEnterRight 0.8s ease-out; }
 
         @keyframes charEnterLeft {
-            from { opacity: 0; transform: translateX(-100px); }
+            from { opacity: 0; transform: translateX(-80px); }
             to { opacity: 1; transform: translateX(0); }
         }
         @keyframes charEnterCenter {
-            from { opacity: 0; transform: translateX(-50%) translateY(50px); }
+            from { opacity: 0; transform: translateX(-50%) translateY(40px); }
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
         @keyframes charEnterRight {
-            from { opacity: 0; transform: translateX(100px); }
+            from { opacity: 0; transform: translateX(80px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
-        /* 角色基础结构 */
-        .char-wrapper {
+        /* 角色容器 */
+        .char-container {
             position: relative;
             width: 100%;
             height: 100%;
@@ -138,473 +139,647 @@
 
         @keyframes idle {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-4px); }
         }
 
-        /* 头部 */
-        .char-head-group {
+        /* ===== 头部 - 大眼睛萝莉风格 ===== */
+        .char-head {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
+            width: 130px;
             height: 140px;
+            z-index: 5;
         }
 
+        /* 脸型 - 圆润可爱 */
         .char-face {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 110px;
-            background: #fdebd0;
+            width: 110px;
+            height: 105px;
+            background: #fff5f0;
             border-radius: 50% 50% 45% 45%;
-            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.1);
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.1),
+                inset 0 -3px 8px rgba(255,200,180,0.3);
+            overflow: hidden;
         }
 
-        /* 眼睛系统 */
+        /* 腮红 - 超可爱 */
+        .char-blush-l, .char-blush-r {
+            position: absolute;
+            top: 55px;
+            width: 22px;
+            height: 12px;
+            background: rgba(255, 150, 150, 0.4);
+            border-radius: 50%;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .char-blush-l { left: 8px; }
+        .char-blush-r { right: 8px; }
+
+        .embarrassed .char-blush-l,
+        .embarrassed .char-blush-r {
+            opacity: 1;
+            background: rgba(255, 100, 100, 0.6);
+        }
+
+        /* ===== 大眼睛 - 二次元风格 ===== */
         .char-eyes {
             position: absolute;
-            top: 35px;
+            top: 30px;
             left: 50%;
             transform: translateX(-50%);
-            width: 70px;
+            width: 80px;
             display: flex;
             justify-content: space-between;
         }
 
-        .eye-group {
+        .eye {
             position: relative;
-            width: 24px;
-            height: 28px;
+            width: 28px;
+            height: 32px;
         }
 
         .eye-white {
             width: 100%;
             height: 100%;
             background: #fff;
-            border-radius: 50%;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow:
+                inset 0 2px 4px rgba(0,0,0,0.1),
+                0 0 0 2px rgba(0,0,0,0.05);
+            position: relative;
         }
 
+        /* 虹膜 - 大而闪亮 */
         .eye-iris {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 16px;
-            height: 18px;
+            transform: translate(-50%, -45%);
+            width: 22px;
+            height: 24px;
             border-radius: 50%;
-            transition: all 0.3s;
+            background: radial-gradient(circle at 40% 40%, #7c5cbf, #4a2d7a);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
         }
 
+        .anzhiqiang .eye-iris {
+            background: radial-gradient(circle at 40% 40%, #e74c8b, #8b1a4a);
+        }
+
+        /* 瞳孔 */
         .eye-pupil {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 8px;
-            height: 9px;
-            background: #1a1a2e;
+            width: 10px;
+            height: 12px;
+            background: #1a0a2e;
             border-radius: 50%;
         }
 
-        .eye-shine {
+        /* 高光 - 大而闪亮 */
+        .eye-shine-lg {
             position: absolute;
-            top: 6px;
-            left: 12px;
-            width: 6px;
-            height: 6px;
-            background: rgba(255,255,255,0.9);
+            top: 5px;
+            left: 14px;
+            width: 8px;
+            height: 8px;
+            background: #fff;
             border-radius: 50%;
+            z-index: 2;
         }
 
-        /* 眨眼动画 */
-        .char-wrapper:not(.talking) .eye-group {
+        .eye-shine-sm {
+            position: absolute;
+            bottom: 8px;
+            right: 6px;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        /* 眼睛底部渐变 */
+        .eye-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(124, 92, 191, 0.3));
+            border-radius: 0 0 50% 50%;
+        }
+
+        .anzhiqiang .eye-gradient {
+            background: linear-gradient(transparent, rgba(231, 76, 139, 0.3));
+        }
+
+        /* 眨眼 */
+        .char-container:not(.talking) .eye {
             animation: blink 4s ease-in-out infinite;
         }
 
         @keyframes blink {
             0%, 45%, 55%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(0.1); }
+            50% { transform: scaleY(0.05); }
         }
 
-        /* 开心表情 */
-        .happy .eye-group {
-            height: 12px !important;
+        /* 开心表情 - 眯眼笑 */
+        .happy .eye {
+            height: 14px !important;
         }
         .happy .eye-white {
+            height: 14px;
             border-radius: 50% 50% 0 0;
-            height: 12px;
         }
-        .happy .eye-iris, .happy .eye-pupil, .happy .eye-shine {
+        .happy .eye-iris,
+        .happy .eye-pupil,
+        .happy .eye-shine-lg,
+        .happy .eye-shine-sm,
+        .happy .eye-gradient {
             display: none;
         }
 
         /* 惊讶表情 */
-        .surprised .eye-group {
-            transform: scale(1.3);
+        .surprised .eye {
+            transform: scale(1.2);
         }
         .surprised .eye-iris {
-            width: 20px;
-            height: 22px;
+            width: 24px;
+            height: 26px;
         }
 
-        /* 嘴巴 */
+        /* ===== 嘴巴 ===== */
         .char-mouth {
             position: absolute;
-            bottom: 25px;
+            bottom: 22px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 10px;
             transition: all 0.3s;
         }
 
         .mouth-normal {
-            width: 18px;
+            width: 16px;
             height: 3px;
-            background: #d4a0a0;
+            background: #e8a0a0;
             border-radius: 2px;
         }
 
         .mouth-smile {
-            width: 24px;
-            height: 12px;
-            border: 3px solid #d4a0a0;
+            width: 22px;
+            height: 10px;
+            border: 3px solid #e8a0a0;
             border-top: none;
-            border-radius: 0 0 15px 15px;
+            border-radius: 0 0 12px 12px;
             background: transparent;
         }
 
         .mouth-sad {
-            width: 20px;
-            height: 10px;
-            border: 3px solid #d4a0a0;
+            width: 18px;
+            height: 8px;
+            border: 3px solid #e8a0a0;
             border-bottom: none;
-            border-radius: 15px 15px 0 0;
+            border-radius: 10px 10px 0 0;
             background: transparent;
-            transform: translateX(-50%) translateY(5px);
+            transform: translateX(-50%) translateY(3px);
         }
 
         .mouth-open {
-            width: 18px;
-            height: 14px;
-            background: #c0392b;
+            width: 16px;
+            height: 12px;
+            background: #d4556a;
             border-radius: 50%;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .mouth-embarrassed {
-            width: 15px;
-            height: 8px;
-            border: 2px solid #d4a0a0;
+            width: 14px;
+            height: 6px;
+            border: 2px solid #e8a0a0;
             border-top: none;
-            border-radius: 0 0 10px 10px;
+            border-radius: 0 0 8px 8px;
             background: transparent;
             animation: mouthTremble 0.3s ease-in-out infinite;
         }
 
         @keyframes mouthTremble {
             0%, 100% { transform: translateX(-50%); }
-            50% { transform: translateX(-50%) translateX(2px); }
-        }
-
-        /* 腮红 */
-        .char-blush {
-            position: absolute;
-            top: 50px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 5px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .blush-mark {
-            width: 20px;
-            height: 10px;
-            background: rgba(255, 150, 150, 0.5);
-            border-radius: 50%;
-        }
-
-        .embarrassed .char-blush {
-            opacity: 1;
-        }
-
-        /* 头发 - 朱元乐（短发，黑色） */
-        .zhuyuanle .char-hair-back {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 115px;
-            height: 80px;
-            background: #2c3e50;
-            border-radius: 50% 50% 30% 30%;
-            z-index: -1;
-        }
-
-        .zhuyuanle .char-hair-front {
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 105px;
-            height: 40px;
-            background: #2c3e50;
-            border-radius: 50% 50% 20% 20%;
-            z-index: 2;
-        }
-
-        .zhuyuanle .char-hair-bangs {
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90px;
-            height: 35px;
-            background: #34495e;
-            border-radius: 0 0 40% 40%;
-            z-index: 3;
-        }
-
-        .zhuyuanle .char-hair-side-l,
-        .zhuyuanle .char-hair-side-r {
-            position: absolute;
-            top: 20px;
-            width: 15px;
-            height: 50px;
-            background: #2c3e50;
-            border-radius: 0 0 50% 50%;
-        }
-
-        .zhuyuanle .char-hair-side-l { left: 15px; transform: rotate(5deg); }
-        .zhuyuanle .char-hair-side-r { right: 15px; transform: rotate(-5deg); }
-
-        /* 头发 - 安志强（长发，紫色） */
-        .anzhiqiang .char-hair-back {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 130px;
-            height: 200px;
-            background: linear-gradient(180deg, #8e44ad, #9b59b6);
-            border-radius: 50% 50% 30% 30%;
-            z-index: -1;
-        }
-
-        .anzhiqiang .char-hair-front {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 110px;
-            height: 45px;
-            background: #8e44ad;
-            border-radius: 50% 50% 20% 20%;
-            z-index: 2;
-        }
-
-        .anzhiqiang .char-hair-bangs {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 95px;
-            height: 40px;
-            background: #9b59b6;
-            border-radius: 0 0 45% 35%;
-            z-index: 3;
-        }
-
-        .anzhiqiang .char-hair-side-l,
-        .anzhiqiang .char-hair-side-r {
-            position: absolute;
-            top: 15px;
-            width: 25px;
-            height: 120px;
-            background: linear-gradient(180deg, #8e44ad, #9b59b6);
-            border-radius: 0 0 50% 50%;
-        }
-
-        .anzhiqiang .char-hair-side-l { left: 10px; transform: rotate(3deg); }
-        .anzhiqiang .char-hair-side-r { right: 10px; transform: rotate(-3deg); }
-
-        /* 发饰 - 安志强的发夹 */
-        .anzhiqiang .hair-accessory {
-            position: absolute;
-            top: -5px;
-            right: 20px;
-            width: 25px;
-            height: 12px;
-            background: #e74c3c;
-            border-radius: 6px;
-            z-index: 4;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        /* 身体 */
-        .char-body {
-            position: absolute;
-            top: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 180px;
-            border-radius: 20px 20px 10px 10px;
-            overflow: hidden;
-        }
-
-        /* 校服 - 朱元乐 */
-        .zhuyuanle .char-body {
-            background: linear-gradient(180deg, #fff 0%, #fff 40%, #2c3e50 40%, #2c3e50 100%);
-        }
-
-        .zhuyuanle .char-body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 70px;
-            background: #3498db;
-            clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
-        }
-
-        .zhuyuanle .char-body::after {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 8px;
-            background: #f39c12;
-            border-radius: 50%;
-        }
-
-        /* 校服 - 安志强 */
-        .anzhiqiang .char-body {
-            background: linear-gradient(180deg, #fff 0%, #fff 35%, #2c3e50 35%, #2c3e50 100%);
-        }
-
-        .anzhiqiang .char-body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 55px;
-            height: 65px;
-            background: #e74c3c;
-            clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
-        }
-
-        .anzhiqiang .char-body::after {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 8px;
-            background: #f39c12;
-            border-radius: 50%;
-        }
-
-        /* 裙子 */
-        .char-skirt {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 160px;
-            height: 80px;
-            background: #2c3e50;
-            border-radius: 0 0 40% 40%;
-        }
-
-        /* 手臂 */
-        .char-arm-l,
-        .char-arm-r {
-            position: absolute;
-            top: 130px;
-            width: 30px;
-            height: 100px;
-            background: #fff;
-            border-radius: 15px;
-            transition: all 0.3s;
-        }
-
-        .char-arm-l { left: 25px; transform: rotate(5deg); }
-        .char-arm-r { right: 25px; transform: rotate(-5deg); }
-
-        /* 手臂动画 */
-        .waving .char-arm-r {
-            animation: wave 0.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes wave {
-            0% { transform: rotate(-5deg); }
-            100% { transform: rotate(-30deg); }
+            50% { transform: translateX(-50%) translateX(1px); }
         }
 
         /* 说话动画 */
         .talking .char-mouth {
-            animation: talk 0.3s ease-in-out infinite alternate;
+            animation: talk 0.25s ease-in-out infinite alternate;
         }
 
         @keyframes talk {
             0% { transform: translateX(-50%) scaleY(1); }
-            100% { transform: translateX(-50%) scaleY(0.5); }
+            100% { transform: translateX(-50%) scaleY(0.4); }
         }
 
-        /* 害羞动画 */
-        .embarrassed .char-wrapper {
-            animation: embarrassed 0.5s ease-in-out;
+        /* ===== 头发 - 超精致二次元风格 ===== */
+        /* 朱元乐 - 蓝黑色短发 */
+        .zhuyuanle .hair-back {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 125px;
+            height: 90px;
+            background: linear-gradient(180deg, #2c3e50, #34495e);
+            border-radius: 50% 50% 30% 30%;
+            z-index: -1;
         }
 
-        @keyframes embarrassed {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        .zhuyuanle .hair-top {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 115px;
+            height: 50px;
+            background: linear-gradient(180deg, #3d566e, #2c3e50);
+            border-radius: 50% 50% 20% 20%;
+            z-index: 6;
         }
 
-        /* 惊讶动画 */
-        .surprised .char-wrapper {
-            animation: surpriseJump 0.5s ease-out;
+        .zhuyuanle .hair-bangs {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 40px;
+            background: linear-gradient(180deg, #3d566e, #2c3e50);
+            border-radius: 0 0 40% 40%;
+            z-index: 7;
+            clip-path: polygon(0% 0%, 15% 100%, 35% 70%, 50% 100%, 65% 70%, 85% 100%, 100% 0%);
         }
 
-        @keyframes surpriseJump {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
+        .zhuyuanle .hair-side-l,
+        .zhuyuanle .hair-side-r {
+            position: absolute;
+            top: 25px;
+            width: 18px;
+            height: 45px;
+            background: linear-gradient(180deg, #2c3e50, #34495e);
+            border-radius: 0 0 50% 50%;
+            z-index: 4;
+        }
+        .zhuyuanle .hair-side-l { left: 12px; transform: rotate(3deg); }
+        .zhuyuanle .hair-side-r { right: 12px; transform: rotate(-3deg); }
+
+        /* 头发高光 */
+        .zhuyuanle .hair-shine {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 20px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            border-radius: 50%;
+            z-index: 8;
         }
 
-        /* 开心动画 */
-        .happy .char-wrapper {
-            animation: happyBounce 0.6s ease-in-out;
+        /* 安志强 - 粉紫色双马尾 */
+        .anzhiqiang .hair-back {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 250px;
+            background: linear-gradient(180deg, #c06090, #d4789e, #e8a0c0);
+            border-radius: 50% 50% 30% 30%;
+            z-index: -1;
+        }
+
+        .anzhiqiang .hair-top {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 55px;
+            background: linear-gradient(180deg, #d4789e, #c06090);
+            border-radius: 50% 50% 20% 20%;
+            z-index: 6;
+        }
+
+        .anzhiqiang .hair-bangs {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 105px;
+            height: 45px;
+            background: linear-gradient(180deg, #d4789e, #c06090);
+            border-radius: 0 0 45% 45%;
+            z-index: 7;
+            clip-path: polygon(0% 0%, 20% 100%, 40% 60%, 55% 100%, 70% 60%, 80% 100%, 100% 0%);
+        }
+
+        /* 双马尾 */
+        .anzhiqiang .hair-twin-l,
+        .anzhiqiang .hair-twin-r {
+            position: absolute;
+            top: 20px;
+            width: 30px;
+            height: 150px;
+            background: linear-gradient(180deg, #c06090, #d4789e, #e8a0c0);
+            border-radius: 50% 50% 40% 40%;
+            z-index: 3;
+        }
+
+        .anzhiqiang .hair-twin-l {
+            left: -15px;
+            transform: rotate(8deg);
+            animation: twinSwayL 3s ease-in-out infinite;
+        }
+
+        .anzhiqiang .hair-twin-r {
+            right: -15px;
+            transform: rotate(-8deg);
+            animation: twinSwayR 3s ease-in-out infinite;
+        }
+
+        @keyframes twinSwayL {
+            0%, 100% { transform: rotate(8deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes twinSwayR {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(-5deg); }
+        }
+
+        /* 发饰 - 蝴蝶结 */
+        .anzhiqiang .hair-ribbon-l,
+        .anzhiqiang .hair-ribbon-r {
+            position: absolute;
+            top: 15px;
+            width: 20px;
+            height: 15px;
+            background: #ff6b8a;
+            z-index: 8;
+        }
+
+        .anzhiqiang .hair-ribbon-l {
+            left: -5px;
+            border-radius: 50% 0 50% 50%;
+            transform: rotate(-10deg);
+        }
+
+        .anzhiqiang .hair-ribbon-r {
+            right: -5px;
+            border-radius: 0 50% 50% 50%;
+            transform: rotate(10deg);
+        }
+
+        .anzhiqiang .ribbon-center-l,
+        .anzhiqiang .ribbon-center-r {
+            position: absolute;
+            top: 20px;
+            width: 8px;
+            height: 8px;
+            background: #ff4070;
+            border-radius: 50%;
+            z-index: 9;
+        }
+
+        .anzhiqiang .ribbon-center-l { left: 2px; }
+        .anzhiqiang .ribbon-center-r { right: 2px; }
+
+        /* 头发高光 */
+        .anzhiqiang .hair-shine {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 25px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            border-radius: 50%;
+            z-index: 8;
+        }
+
+        /* ===== 身体 - Q版比例 ===== */
+        .char-body {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 120px;
+            z-index: 2;
+        }
+
+        /* 上衣 */
+        .char-shirt {
+            width: 100%;
+            height: 70px;
+            background: #fff;
+            border-radius: 10px 10px 5px 5px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* 领子 */
+        .char-collar {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 20px;
+            background: #fff;
+            clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+        }
+
+        /* 领结/领带 */
+        .char-bow {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 15px;
+            z-index: 3;
+        }
+
+        .zhuyuanle .char-bow {
+            background: #3498db;
+            clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%);
+        }
+
+        .anzhiqiang .char-bow {
+            background: #ff6b8a;
+            clip-path: polygon(0% 0%, 30% 50%, 0% 100%, 50% 70%, 100% 100%, 70% 50%, 100% 0%, 50% 30%);
+        }
+
+        /* 袖子 */
+        .char-sleeve-l,
+        .char-sleeve-r {
+            position: absolute;
+            top: 5px;
+            width: 30px;
+            height: 50px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .char-sleeve-l { left: -20px; transform: rotate(10deg); }
+        .char-sleeve-r { right: -20px; transform: rotate(-10deg); }
+
+        /* 手 */
+        .char-hand-l,
+        .char-hand-r {
+            position: absolute;
+            top: 45px;
+            width: 18px;
+            height: 18px;
+            background: #fff5f0;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .char-hand-l { left: -15px; }
+        .char-hand-r { right: -15px; }
+
+        /* 裙子 */
+        .char-skirt {
+            width: 110px;
+            height: 55px;
+            background: #2c3e50;
+            margin-left: -5px;
+            border-radius: 0 0 30% 30%;
+            position: relative;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .char-skirt::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        }
+
+        /* 裙褶 */
+        .char-skirt-pleat {
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: rgba(0,0,0,0.1);
+        }
+
+        /* 腿 */
+        .char-legs {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .char-leg {
+            width: 20px;
+            height: 55px;
+            background: #fff5f0;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        /* 袜子 */
+        .char-sock {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* 鞋子 */
+        .char-shoe {
+            position: absolute;
+            bottom: -8px;
+            left: -3px;
+            width: 26px;
+            height: 12px;
+            background: #2c3e50;
+            border-radius: 8px 8px 5px 5px;
+        }
+
+        /* ===== 动画效果 ===== */
+        .waving .char-sleeve-r,
+        .waving .char-hand-r {
+            animation: wave 0.4s ease-in-out infinite alternate;
+            transform-origin: left center;
+        }
+
+        @keyframes wave {
+            0% { transform: rotate(-10deg); }
+            100% { transform: rotate(-40deg); }
+        }
+
+        .happy .char-container {
+            animation: happyBounce 0.5s ease-in-out;
         }
 
         @keyframes happyBounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-12px); }
         }
 
-        /* 悲伤动画 */
-        .sad .char-wrapper {
+        .surprised .char-container {
+            animation: surpriseJump 0.4s ease-out;
+        }
+
+        @keyframes surpriseJump {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+
+        .sad .char-container {
             animation: sadDroop 1s ease-in-out;
         }
 
         @keyframes sadDroop {
             0% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(5px) rotate(-2deg); }
+            50% { transform: translateY(3px) rotate(-1deg); }
             100% { transform: translateY(0) rotate(0); }
+        }
+
+        .embarrassed .char-container {
+            animation: embarrassedShake 0.4s ease-in-out;
+        }
+
+        @keyframes embarrassedShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
         }
 
         /* ===== 对话框 ===== */
@@ -613,43 +788,44 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 200px;
-            background: linear-gradient(180deg, rgba(0,0,0,0.75), rgba(0,0,0,0.95));
+            height: 190px;
+            background: linear-gradient(180deg, rgba(20,10,30,0.85), rgba(20,10,30,0.95));
             backdrop-filter: blur(15px);
             z-index: 20;
             cursor: pointer;
-            border-top: 2px solid rgba(255,255,255,0.15);
+            border-top: 3px solid rgba(255,107,138,0.5);
         }
 
         #speaker-name {
             position: absolute;
             top: -18px;
             left: 30px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b8a, #ff8fab);
             color: #fff;
             padding: 8px 30px;
-            border-radius: 25px;
+            border-radius: 20px;
             font-size: 16px;
             font-weight: bold;
             letter-spacing: 3px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(255,107,138,0.4);
         }
 
         #dialogue-text {
             color: #fff;
-            font-size: 18px;
-            line-height: 1.8;
-            padding: 30px 40px;
+            font-size: 17px;
+            line-height: 1.9;
+            padding: 28px 40px;
             letter-spacing: 1px;
             min-height: 100px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
         #click-hint {
             position: absolute;
             bottom: 15px;
             right: 30px;
-            color: rgba(255,255,255,0.5);
-            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
             animation: blink-hint 1.5s infinite;
         }
 
@@ -663,12 +839,12 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(20,10,30,0.7);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 30;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
         #choices-overlay.active { display: flex; }
 
@@ -676,23 +852,24 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-width: 500px;
+            max-width: 450px;
             width: 90%;
         }
 
         .choice-btn {
-            padding: 20px 30px;
-            font-size: 18px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            padding: 18px 28px;
+            font-size: 17px;
+            background: linear-gradient(135deg, rgba(255,107,138,0.9), rgba(255,143,171,0.9));
             border: 2px solid rgba(255,255,255,0.3);
             color: #fff;
-            border-radius: 15px;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s;
-            text-align: left;
-            letter-spacing: 2px;
+            text-align: center;
+            letter-spacing: 3px;
             backdrop-filter: blur(10px);
             animation: choiceAppear 0.5s ease-out backwards;
+            box-shadow: 0 5px 20px rgba(255,107,138,0.3);
         }
 
         .choice-btn:nth-child(1) { animation-delay: 0.1s; }
@@ -700,15 +877,15 @@
         .choice-btn:nth-child(3) { animation-delay: 0.3s; }
 
         @keyframes choiceAppear {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .choice-btn:hover {
-            transform: translateX(10px);
-            background: linear-gradient(135deg, rgba(102, 126, 234, 1), rgba(118, 75, 162, 1));
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, rgba(255,107,138,1), rgba(255,143,171,1));
             border-color: rgba(255,255,255,0.6);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 8px 25px rgba(255,107,138,0.5);
         }
 
         /* ===== 菜单 ===== */
@@ -717,7 +894,7 @@
             top: 20px;
             right: 20px;
             z-index: 50;
-            background: rgba(0,0,0,0.5);
+            background: rgba(255,107,138,0.3);
             border: 1px solid rgba(255,255,255,0.3);
             color: #fff;
             padding: 10px 20px;
@@ -727,83 +904,117 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s;
         }
-        #menu-btn:hover { background: rgba(0,0,0,0.7); transform: scale(1.05); }
+        #menu-btn:hover { background: rgba(255,107,138,0.5); transform: scale(1.05); }
+
+        /* ===== 好感度 ===== */
+        #affection-display {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 50;
+            background: rgba(20,10,30,0.6);
+            padding: 12px 20px;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,107,138,0.3);
+        }
+
+        .affection-bar {
+            width: 100px;
+            height: 6px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 3px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+
+        .affection-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b8a, #ff8fab, #ffb3c6);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(255,107,138,0.5);
+        }
 
         /* ===== 存档界面 ===== */
         #save-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(20,10,30,0.95);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
         #save-overlay.active { display: flex; }
 
         .save-container {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-radius: 20px;
+            background: linear-gradient(135deg, #2a1a3e, #1a0a2e);
+            border-radius: 25px;
             padding: 40px;
-            max-width: 600px;
+            max-width: 550px;
             width: 90%;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,107,138,0.3);
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
 
         .save-title {
             color: #fff;
-            font-size: 24px;
+            font-size: 22px;
             text-align: center;
-            margin-bottom: 30px;
-            letter-spacing: 4px;
+            margin-bottom: 25px;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(255,107,138,0.5);
         }
 
         .save-slots {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .save-slot {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
-            padding: 20px;
+            background: rgba(255,107,138,0.1);
+            border: 1px solid rgba(255,107,138,0.2);
+            border-radius: 15px;
+            padding: 18px;
             cursor: pointer;
             transition: all 0.3s;
             color: #fff;
         }
         .save-slot:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: #667eea;
+            background: rgba(255,107,138,0.2);
+            border-color: rgba(255,107,138,0.5);
             transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255,107,138,0.2);
         }
 
-        .save-slot-title { font-size: 14px; color: #667eea; margin-bottom: 5px; }
-        .save-slot-info { font-size: 12px; color: rgba(255,255,255,0.6); }
+        .save-slot-title { font-size: 13px; color: #ff8fab; margin-bottom: 5px; }
+        .save-slot-info { font-size: 11px; color: rgba(255,255,255,0.5); }
 
         .close-save {
             display: block;
             margin: 20px auto 0;
             padding: 10px 40px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,107,138,0.2);
+            border: 1px solid rgba(255,107,138,0.4);
             color: #fff;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
         }
-        .close-save:hover { background: rgba(255,255,255,0.2); }
+        .close-save:hover { background: rgba(255,107,138,0.4); }
 
         /* ===== 章节标题 ===== */
         #chapter-title {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: #000;
+            background: linear-gradient(135deg, #1a0a2e, #2a1a3e);
             display: none;
             justify-content: center;
             align-items: center;
@@ -813,16 +1024,17 @@
         #chapter-title.active { display: flex; }
 
         .chapter-name {
-            font-size: 42px;
+            font-size: 40px;
             color: #fff;
             letter-spacing: 10px;
             margin-bottom: 15px;
             animation: chapterFadeIn 1s ease-out;
+            text-shadow: 0 0 30px rgba(255,107,138,0.5);
         }
 
         .chapter-sub {
-            font-size: 18px;
-            color: rgba(255,255,255,0.6);
+            font-size: 16px;
+            color: rgba(255,143,171,0.8);
             letter-spacing: 5px;
             animation: chapterFadeIn 1s ease-out 0.3s backwards;
         }
@@ -837,7 +1049,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b8a, #ff8fab, #a18cd1);
             display: none;
             justify-content: center;
             align-items: center;
@@ -847,7 +1059,7 @@
         #ending-screen.active { display: flex; }
 
         .ending-title {
-            font-size: 52px;
+            font-size: 48px;
             color: #fff;
             margin-bottom: 20px;
             letter-spacing: 10px;
@@ -856,8 +1068,8 @@
         }
 
         .ending-desc {
-            font-size: 18px;
-            color: rgba(255,255,255,0.8);
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
             margin-bottom: 40px;
             letter-spacing: 3px;
             max-width: 500px;
@@ -865,12 +1077,12 @@
             line-height: 1.8;
         }
 
-        /* ===== CG 回忆 ===== */
+        /* ===== CG ===== */
         #cg-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: #000;
+            background: linear-gradient(135deg, #1a0a2e, #2a1a3e);
             display: none;
             justify-content: center;
             align-items: center;
@@ -880,32 +1092,34 @@
         #cg-overlay.active { display: flex; }
 
         .cg-scene {
-            width: 80%;
-            max-width: 800px;
-            height: 50vh;
-            border-radius: 15px;
+            width: 75%;
+            max-width: 700px;
+            height: 45vh;
+            border-radius: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 100px;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            font-size: 90px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, rgba(255,107,138,0.2), rgba(161,140,209,0.2));
+            border: 1px solid rgba(255,107,138,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         .cg-text {
             color: #fff;
-            font-size: 20px;
+            font-size: 18px;
             text-align: center;
             letter-spacing: 4px;
             font-style: italic;
+            text-shadow: 0 0 20px rgba(255,107,138,0.5);
         }
 
         /* ===== 天气效果 ===== */
         .rain-drop {
             position: absolute;
             width: 2px;
-            background: linear-gradient(transparent, rgba(174, 194, 224, 0.6));
+            background: linear-gradient(transparent, rgba(174, 194, 224, 0.5));
             animation: rain-fall linear infinite;
         }
         @keyframes rain-fall {
@@ -915,29 +1129,40 @@
 
         .star {
             position: absolute;
-            width: 3px;
-            height: 3px;
             background: #fff;
             border-radius: 50%;
             animation: twinkle 2s infinite;
         }
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
+            0%, 100% { opacity: 0.2; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.5); }
         }
 
         .sakura {
             position: absolute;
-            width: 15px;
-            height: 15px;
-            background: radial-gradient(circle, #ffb7c5, transparent);
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #ffb7c5 30%, #ffc0cb 60%, transparent);
             border-radius: 50% 0 50% 50%;
             animation: sakura-fall linear infinite;
+            opacity: 0.8;
         }
         @keyframes sakura-fall {
-            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; }
-            50% { transform: translateY(50vh) rotate(180deg) translateX(50px); }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); opacity: 0; }
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0.8; }
+            50% { transform: translateY(50vh) rotate(180deg) translateX(40px); }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(-15px); opacity: 0; }
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255,107,138,0.6);
+            font-size: 14px;
+            animation: heartFloat linear infinite;
+        }
+        @keyframes heartFloat {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
         /* ===== 转场 ===== */
@@ -945,7 +1170,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: #000;
+            background: linear-gradient(135deg, #1a0a2e, #2a1a3e);
             z-index: 999;
             opacity: 0;
             pointer-events: none;
@@ -955,44 +1180,11 @@
             opacity: 1;
             pointer-events: all;
         }
-
-        /* ===== 好感度显示 ===== */
-        #affection-display {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 50;
-            background: rgba(0,0,0,0.5);
-            padding: 10px 20px;
-            border-radius: 20px;
-            color: #fff;
-            font-size: 14px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .affection-bar {
-            width: 100px;
-            height: 8px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 4px;
-            margin-top: 5px;
-            overflow: hidden;
-        }
-
-        .affection-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
     </style>
 </head>
 <body>
-    <!-- 转场 -->
     <div id="transition"></div>
 
-    <!-- 标题画面 -->
     <div id="title-screen">
         <div class="title-text">夏日心事</div>
         <div class="title-subtitle">~ 校园青春 Galgame ~</div>
@@ -1001,7 +1193,6 @@
         <button class="title-btn" onclick="showCG()">CG 回忆</button>
     </div>
 
-    <!-- 游戏主界面 -->
     <div id="game-container">
         <div id="bg-layer"></div>
         <div id="weather-layer" class="weather-overlay"></div>
@@ -1020,12 +1211,10 @@
         <button id="menu-btn" onclick="toggleSave()">菜单</button>
     </div>
 
-    <!-- 选项 -->
     <div id="choices-overlay">
         <div class="choices-container" id="choices-container"></div>
     </div>
 
-    <!-- 存档 -->
     <div id="save-overlay">
         <div class="save-container">
             <div class="save-title">存档管理</div>
@@ -1034,20 +1223,17 @@
         </div>
     </div>
 
-    <!-- 章节标题 -->
     <div id="chapter-title">
         <div class="chapter-name" id="chapter-name"></div>
         <div class="chapter-sub" id="chapter-sub"></div>
     </div>
 
-    <!-- CG -->
     <div id="cg-overlay">
         <div class="cg-scene" id="cg-scene"></div>
         <div class="cg-text" id="cg-text"></div>
         <button class="close-save" onclick="closeCG()" style="margin-top:30px">返回</button>
     </div>
 
-    <!-- 结局 -->
     <div id="ending-screen">
         <div class="ending-title" id="ending-title"></div>
         <div class="ending-desc" id="ending-desc"></div>
@@ -1055,7 +1241,6 @@
     </div>
 
     <script>
-        // ===== 游戏引擎 =====
         const Engine = {
             currentScene: null,
             currentLine: 0,
@@ -1067,19 +1252,19 @@
             endings: [],
 
             backgrounds: {
-                classroom: 'linear-gradient(180deg, #87CEEB 0%, #F0F8FF 30%, #DEB887 30%, #D2B48C 100%)',
+                classroom: 'linear-gradient(180deg, #87CEEB 0%, #E8F4F8 30%, #DEB887 30%, #D2B48C 100%)',
                 hallway: 'linear-gradient(180deg, #87CEEB 0%, #F5F5DC 40%, #D2B48C 100%)',
-                playground: 'linear-gradient(180deg, #87CEEB 0%, #98FB98 50%, #228B22 100%)',
-                street: 'linear-gradient(180deg, #FFA07A 0%, #FFDAB9 30%, #808080 60%, #696969 100%)',
-                river: 'linear-gradient(180deg, #FF6B6B 0%, #FFE66D 20%, #4ECDC4 50%, #45B7D1 100%)',
-                bookstore: 'linear-gradient(180deg, #8B4513 0%, #D2691E 30%, #DEB887 100%)',
-                home: 'linear-gradient(180deg, #FFF8DC 0%, #FAEBD7 50%, #D2B48C 100%)',
-                mountain: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #228B22 100%)',
-                rooftop: 'linear-gradient(180deg, #FF6B6B 0%, #FFA07A 30%, #FFD700 60%, #DEB887 100%)',
-                festival: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 30%, #e94560 60%, #ffd700 100%)',
-                sakura: 'linear-gradient(180deg, #FFB7C5 0%, #FFC0CB 30%, #98FB98 60%, #228B22 100%)',
-                night: 'linear-gradient(180deg, #0c0c1d 0%, #1a1a2e 50%, #16213e 100%)',
-                sunset: 'linear-gradient(180deg, #FF6B6B 0%, #FFA07A 25%, #FFD700 50%, #87CEEB 100%)'
+                playground: 'linear-gradient(180deg, #87CEEB 0%, #90EE90 50%, #228B22 100%)',
+                street: 'linear-gradient(180deg, #FFB347 0%, #FFCC80 30%, #808080 60%, #696969 100%)',
+                river: 'linear-gradient(180deg, #FF9A9E 0%, #FECFEF 20%, #4ECDC4 50%, #45B7D1 100%)',
+                bookstore: 'linear-gradient(180deg, #8B6914 0%, #D4A574 30%, #F5DEB3 100%)',
+                home: 'linear-gradient(180deg, #FFF8DC 0%, #FFEFD5 50%, #DEB888 100%)',
+                mountain: 'linear-gradient(180deg, #1a1a2e 0%, #2a1a3e 30%, #0f3460 60%, #228B22 100%)',
+                rooftop: 'linear-gradient(180deg, #FF9A9E 0%, #FFB347 30%, #FFD700 60%, #DEB888 100%)',
+                festival: 'linear-gradient(180deg, #1a1a2e 0%, #2a1a3e 30%, #ff6b8a 60%, #ffd700 100%)',
+                sakura: 'linear-gradient(180deg, #FFB7C5 0%, #FFD1DC 30%, #90EE90 60%, #228B22 100%)',
+                night: 'linear-gradient(180deg, #0c0c1d 0%, #1a1a2e 50%, #2a1a3e 100%)',
+                sunset: 'linear-gradient(180deg, #FF9A9E 0%, #FFB347 25%, #FFD700 50%, #87CEEB 100%)'
             },
 
             characters: {
@@ -1091,7 +1276,7 @@
             }
         };
 
-        // ===== 角色渲染系统 =====
+        // ===== 二次元萝莉风格角色渲染 =====
         function renderCharacter(charId, emotion = 'normal', position = 'center') {
             const char = Engine.characters[charId];
             if (!char) return '';
@@ -1101,49 +1286,88 @@
 
             return `
                 <div class="character ${char.class} ${position}">
-                    <div class="char-wrapper ${emotionClass}">
+                    <div class="char-container ${emotionClass}">
                         <!-- 头部 -->
-                        <div class="char-head-group">
-                            <div class="char-hair-back"></div>
+                        <div class="char-head">
+                            <div class="hair-back"></div>
+                            <div class="hair-top"></div>
                             <div class="char-face">
-                                <div class="char-hair-bangs"></div>
+                                <div class="hair-bangs"></div>
+
+                                <!-- 眼睛 -->
                                 <div class="char-eyes">
-                                    <div class="eye-group">
+                                    <div class="eye">
                                         <div class="eye-white">
-                                            <div class="eye-iris" style="background: ${isHeroine ? '#9b59b6' : '#2c3e50'}">
+                                            <div class="eye-iris">
                                                 <div class="eye-pupil"></div>
                                             </div>
-                                            <div class="eye-shine"></div>
+                                            <div class="eye-shine-lg"></div>
+                                            <div class="eye-shine-sm"></div>
+                                            <div class="eye-gradient"></div>
                                         </div>
                                     </div>
-                                    <div class="eye-group">
+                                    <div class="eye">
                                         <div class="eye-white">
-                                            <div class="eye-iris" style="background: ${isHeroine ? '#9b59b6' : '#2c3e50'}">
+                                            <div class="eye-iris">
                                                 <div class="eye-pupil"></div>
                                             </div>
-                                            <div class="eye-shine"></div>
+                                            <div class="eye-shine-lg"></div>
+                                            <div class="eye-shine-sm"></div>
+                                            <div class="eye-gradient"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="char-blush">
-                                    <div class="blush-mark"></div>
-                                    <div class="blush-mark"></div>
-                                </div>
+
+                                <!-- 腮红 -->
+                                <div class="char-blush-l"></div>
+                                <div class="char-blush-r"></div>
+
+                                <!-- 嘴巴 -->
                                 <div class="char-mouth">
                                     ${getMouthHTML(emotion)}
                                 </div>
                             </div>
-                            <div class="char-hair-front"></div>
-                            ${isHeroine ? '<div class="hair-accessory"></div>' : ''}
-                            <div class="char-hair-side-l"></div>
-                            <div class="char-hair-side-r"></div>
+
+                            <!-- 头发装饰 -->
+                            <div class="hair-side-l"></div>
+                            <div class="hair-side-r"></div>
+                            <div class="hair-shine"></div>
+                            ${isHeroine ? `
+                                <div class="hair-twin-l"></div>
+                                <div class="hair-twin-r"></div>
+                                <div class="hair-ribbon-l"></div>
+                                <div class="hair-ribbon-r"></div>
+                                <div class="ribbon-center-l"></div>
+                                <div class="ribbon-center-r"></div>
+                            ` : ''}
                         </div>
+
                         <!-- 身体 -->
                         <div class="char-body">
-                            <div class="char-skirt"></div>
+                            <div class="char-shirt">
+                                <div class="char-collar"></div>
+                                <div class="char-bow"></div>
+                            </div>
+                            <div class="char-sleeve-l"></div>
+                            <div class="char-sleeve-r"></div>
+                            <div class="char-hand-l"></div>
+                            <div class="char-hand-r"></div>
+                            <div class="char-skirt">
+                                <div class="char-skirt-pleat" style="left: 25%"></div>
+                                <div class="char-skirt-pleat" style="left: 50%"></div>
+                                <div class="char-skirt-pleat" style="left: 75%"></div>
+                            </div>
+                            <div class="char-legs">
+                                <div class="char-leg">
+                                    <div class="char-sock"></div>
+                                    <div class="char-shoe"></div>
+                                </div>
+                                <div class="char-leg">
+                                    <div class="char-sock"></div>
+                                    <div class="char-shoe"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="char-arm-l"></div>
-                        <div class="char-arm-r"></div>
                     </div>
                 </div>
             `;
@@ -1716,35 +1940,48 @@
             layer.innerHTML = '';
 
             if (type === 'rain') {
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 80; i++) {
                     const drop = document.createElement('div');
                     drop.className = 'rain-drop';
                     drop.style.left = Math.random() * 100 + '%';
-                    drop.style.height = Math.random() * 20 + 10 + 'px';
+                    drop.style.height = Math.random() * 15 + 8 + 'px';
                     drop.style.animationDuration = Math.random() * 0.5 + 0.5 + 's';
                     drop.style.animationDelay = Math.random() * 2 + 's';
                     layer.appendChild(drop);
                 }
             } else if (type === 'stars') {
-                for (let i = 0; i < 80; i++) {
+                for (let i = 0; i < 60; i++) {
                     const star = document.createElement('div');
                     star.className = 'star';
                     star.style.left = Math.random() * 100 + '%';
-                    star.style.top = Math.random() * 60 + '%';
+                    star.style.top = Math.random() * 50 + '%';
                     star.style.animationDelay = Math.random() * 3 + 's';
-                    star.style.width = Math.random() * 4 + 1 + 'px';
-                    star.style.height = star.style.width;
+                    const size = Math.random() * 3 + 1;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
                     layer.appendChild(star);
                 }
+                // 添加爱心特效
+                for (let i = 0; i < 10; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = '♥';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heart.style.fontSize = Math.random() * 10 + 10 + 'px';
+                    layer.appendChild(heart);
+                }
             } else if (type === 'sakura') {
-                for (let i = 0; i < 40; i++) {
+                for (let i = 0; i < 35; i++) {
                     const sakura = document.createElement('div');
                     sakura.className = 'sakura';
                     sakura.style.left = Math.random() * 100 + '%';
                     sakura.style.animationDuration = Math.random() * 3 + 4 + 's';
                     sakura.style.animationDelay = Math.random() * 5 + 's';
-                    sakura.style.width = Math.random() * 10 + 10 + 'px';
-                    sakura.style.height = sakura.style.width;
+                    const size = Math.random() * 8 + 8;
+                    sakura.style.width = size + 'px';
+                    sakura.style.height = size + 'px';
                     layer.appendChild(sakura);
                 }
             }
@@ -1774,20 +2011,15 @@
                 const charLayer = document.getElementById('character-layer');
                 charLayer.innerHTML = renderCharacter(line.speaker, line.emotion, line.position);
 
-                // 添加动作
                 if (line.action) {
-                    const wrapper = charLayer.querySelector('.char-wrapper');
-                    if (wrapper) wrapper.classList.add(line.action);
+                    const container = charLayer.querySelector('.char-container');
+                    if (container) container.classList.add(line.action);
                 }
 
-                // 添加说话动画
-                if (line.speaker !== 'narrator') {
-                    const wrapper = charLayer.querySelector('.char-wrapper');
-                    if (wrapper) wrapper.classList.add('talking');
-                }
+                const container = charLayer.querySelector('.char-container');
+                if (container) container.classList.add('talking');
             }
 
-            // 显示对话
             const nameEl = document.getElementById('speaker-name');
             const textEl = document.getElementById('dialogue-text');
 
@@ -1801,8 +2033,6 @@
             }
 
             typewriter(textEl, line.text);
-
-            // 更新好感度显示
             updateAffectionDisplay();
         }
 
@@ -1819,10 +2049,9 @@
                 } else {
                     clearInterval(Engine.typewriterTimer);
                     Engine.isTyping = false;
-                    // 停止说话动画
-                    const wrapper = document.querySelector('.char-wrapper.talking');
-                    if (wrapper) {
-                        setTimeout(() => wrapper.classList.remove('talking'), 300);
+                    const container = document.querySelector('.char-container.talking');
+                    if (container) {
+                        setTimeout(() => container.classList.remove('talking'), 300);
                     }
                 }
             }, 50);
@@ -1872,7 +2101,6 @@
             fill.style.width = percent + '%';
         }
 
-        // 点击继续
         document.getElementById('dialogue-box').addEventListener('click', () => {
             if (Engine.isTyping) {
                 clearInterval(Engine.typewriterTimer);
@@ -1880,8 +2108,8 @@
                 const scene = Story[Engine.currentScene];
                 const line = scene.lines[Engine.currentLine];
                 document.getElementById('dialogue-text').textContent = line.text;
-                const wrapper = document.querySelector('.char-wrapper.talking');
-                if (wrapper) wrapper.classList.remove('talking');
+                const container = document.querySelector('.char-container.talking');
+                if (container) container.classList.remove('talking');
                 return;
             }
 
@@ -1889,7 +2117,6 @@
             showLine();
         });
 
-        // 存档系统
         function toggleSave() {
             const overlay = document.getElementById('save-overlay');
             overlay.classList.toggle('active');
@@ -1978,7 +2205,6 @@
             document.getElementById('cg-overlay').classList.remove('active');
         }
 
-        // 快捷键
         document.addEventListener('keydown', (e) => {
             if (e.key === ' ' || e.key === 'Enter') {
                 e.preventDefault();
