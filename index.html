@@ -20,7 +20,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a18cd1 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -31,11 +31,11 @@
         #title-screen.hidden { opacity: 0; pointer-events: none; }
 
         .title-text {
-            font-size: 52px;
+            font-size: 56px;
             color: #fff;
-            text-shadow: 3px 3px 15px rgba(0,0,0,0.3);
-            margin-bottom: 10px;
-            letter-spacing: 12px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.5), 3px 3px 15px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+            letter-spacing: 15px;
             animation: titleFloat 3s ease-in-out infinite;
         }
         @keyframes titleFloat {
@@ -44,28 +44,29 @@
         }
 
         .title-subtitle {
-            font-size: 18px;
+            font-size: 20px;
             color: rgba(255,255,255,0.9);
-            margin-bottom: 60px;
-            letter-spacing: 4px;
+            margin-bottom: 70px;
+            letter-spacing: 6px;
         }
 
         .title-btn {
-            padding: 15px 60px;
+            padding: 18px 70px;
             font-size: 20px;
-            background: rgba(255,255,255,0.3);
-            border: 2px solid rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.6);
             color: #fff;
-            border-radius: 30px;
+            border-radius: 35px;
             cursor: pointer;
-            margin: 10px;
+            margin: 12px;
             transition: all 0.3s;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             backdrop-filter: blur(10px);
         }
         .title-btn:hover {
-            background: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.3);
             transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
         }
 
         /* ===== 游戏主界面 ===== */
@@ -92,13 +93,13 @@
             z-index: 5;
         }
 
-        /* ===== 二次元萝莉风格角色系统 ===== */
+        /* ===== 原神风格角色系统 ===== */
         #character-layer {
             position: absolute;
-            bottom: 180px;
+            bottom: 200px;
             left: 0;
             width: 100%;
-            height: 60%;
+            height: 65%;
             z-index: 10;
             display: flex;
             justify-content: center;
@@ -107,14 +108,14 @@
 
         .character {
             position: absolute;
-            width: 200px;
-            height: 350px;
+            width: 260px;
+            height: 480px;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .character.left { left: 12%; animation: charEnterLeft 0.8s ease-out; }
+        .character.left { left: 10%; animation: charEnterLeft 0.8s ease-out; }
         .character.center { left: 50%; transform: translateX(-50%); animation: charEnterCenter 0.8s ease-out; }
-        .character.right { right: 12%; animation: charEnterRight 0.8s ease-out; }
+        .character.right { right: 10%; animation: charEnterRight 0.8s ease-out; }
 
         @keyframes charEnterLeft {
             from { opacity: 0; transform: translateX(-80px); }
@@ -134,105 +135,123 @@
             position: relative;
             width: 100%;
             height: 100%;
-            animation: idle 3s ease-in-out infinite;
+            animation: idle 4s ease-in-out infinite;
         }
 
         @keyframes idle {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+            50% { transform: translateY(-5px); }
         }
 
-        /* ===== 头部 - 大眼睛萝莉风格 ===== */
+        /* ===== 头部 - 原神风格精致五官 ===== */
         .char-head {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 130px;
-            height: 140px;
+            width: 140px;
+            height: 160px;
             z-index: 5;
         }
 
-        /* 脸型 - 圆润可爱 */
+        /* 脸型 - 原神风格瓜子脸 */
         .char-face {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 110px;
-            height: 105px;
-            background: #fff5f0;
-            border-radius: 50% 50% 45% 45%;
+            width: 115px;
+            height: 120px;
+            background: linear-gradient(180deg, #fff5f0 0%, #ffeee5 50%, #ffe0d5 100%);
+            border-radius: 50% 50% 42% 42%;
             box-shadow:
-                0 3px 10px rgba(0,0,0,0.1),
-                inset 0 -3px 8px rgba(255,200,180,0.3);
+                0 4px 15px rgba(0,0,0,0.1),
+                inset 0 -5px 15px rgba(255,200,180,0.2);
             overflow: hidden;
         }
 
-        /* 腮红 - 超可爱 */
+        /* 腮红 */
         .char-blush-l, .char-blush-r {
             position: absolute;
-            top: 55px;
-            width: 22px;
-            height: 12px;
-            background: rgba(255, 150, 150, 0.4);
-            border-radius: 50%;
-            opacity: 0.6;
-            transition: opacity 0.3s;
+            top: 65px;
+            width: 25px;
+            height: 14px;
+            background: radial-gradient(ellipse, rgba(255,130,130,0.35) 0%, transparent 70%);
+            opacity: 0.5;
+            transition: opacity 0.5s;
         }
-        .char-blush-l { left: 8px; }
-        .char-blush-r { right: 8px; }
+        .char-blush-l { left: 5px; }
+        .char-blush-r { right: 5px; }
 
         .embarrassed .char-blush-l,
         .embarrassed .char-blush-r {
             opacity: 1;
-            background: rgba(255, 100, 100, 0.6);
+            background: radial-gradient(ellipse, rgba(255,100,100,0.5) 0%, transparent 70%);
         }
 
-        /* ===== 大眼睛 - 二次元风格 ===== */
+        /* ===== 眼睛 - 原神风格大眼 ===== */
         .char-eyes {
             position: absolute;
-            top: 30px;
+            top: 35px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
+            width: 85px;
             display: flex;
             justify-content: space-between;
         }
 
         .eye {
             position: relative;
-            width: 28px;
-            height: 32px;
+            width: 30px;
+            height: 36px;
         }
 
         .eye-white {
             width: 100%;
             height: 100%;
             background: #fff;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
             overflow: hidden;
-            box-shadow:
-                inset 0 2px 4px rgba(0,0,0,0.1),
-                0 0 0 2px rgba(0,0,0,0.05);
             position: relative;
+            box-shadow:
+                inset 0 3px 6px rgba(0,0,0,0.08),
+                0 0 0 1.5px rgba(0,0,0,0.06);
         }
 
-        /* 虹膜 - 大而闪亮 */
+        /* 虹膜 - 原神风格渐变大瞳 */
         .eye-iris {
             position: absolute;
-            top: 50%;
+            top: 45%;
             left: 50%;
-            transform: translate(-50%, -45%);
-            width: 22px;
-            height: 24px;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 28px;
             border-radius: 50%;
-            background: radial-gradient(circle at 40% 40%, #7c5cbf, #4a2d7a);
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
 
+        /* 朱元乐 - 深蓝紫渐变 */
+        .zhuyuanle .eye-iris {
+            background: radial-gradient(circle at 45% 35%,
+                #7eb8ff 0%,
+                #4a7cff 25%,
+                #2d4fa2 50%,
+                #1a2d6b 80%,
+                #0d1a40 100%
+            );
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        /* 安志强 - 玫红紫渐变 */
         .anzhiqiang .eye-iris {
-            background: radial-gradient(circle at 40% 40%, #e74c8b, #8b1a4a);
+            background: radial-gradient(circle at 45% 35%,
+                #ff9ec4 0%,
+                #e85d8a 25%,
+                #b8336a 50%,
+                #8a1a4a 80%,
+                #5a0d2e 100%
+            );
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
         }
 
         /* 瞳孔 */
@@ -241,134 +260,202 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: 12px;
+            height: 14px;
+            background: #0a0a1a;
+            border-radius: 50%;
+        }
+
+        /* 高光 - 原神风格多层高光 */
+        .eye-highlight-1 {
+            position: absolute;
+            top: 6px;
+            left: 15px;
             width: 10px;
-            height: 12px;
-            background: #1a0a2e;
+            height: 10px;
+            background: rgba(255,255,255,0.95);
             border-radius: 50%;
+            z-index: 3;
+            filter: blur(0.5px);
         }
 
-        /* 高光 - 大而闪亮 */
-        .eye-shine-lg {
+        .eye-highlight-2 {
             position: absolute;
-            top: 5px;
-            left: 14px;
-            width: 8px;
-            height: 8px;
-            background: #fff;
+            bottom: 10px;
+            right: 8px;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.7);
             border-radius: 50%;
-            z-index: 2;
+            z-index: 3;
         }
 
-        .eye-shine-sm {
+        .eye-highlight-3 {
             position: absolute;
-            bottom: 8px;
-            right: 6px;
-            width: 4px;
-            height: 4px;
-            background: rgba(255,255,255,0.8);
+            top: 12px;
+            left: 8px;
+            width: 3px;
+            height: 3px;
+            background: rgba(255,255,255,0.5);
             border-radius: 50%;
-            z-index: 2;
+            z-index: 3;
         }
 
-        /* 眼睛底部渐变 */
-        .eye-gradient {
+        /* 眼睛底部光晕 */
+        .eye-glow {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 50%;
-            background: linear-gradient(transparent, rgba(124, 92, 191, 0.3));
+            height: 40%;
             border-radius: 0 0 50% 50%;
+            z-index: 1;
         }
 
-        .anzhiqiang .eye-gradient {
-            background: linear-gradient(transparent, rgba(231, 76, 139, 0.3));
+        .zhuyuanle .eye-glow {
+            background: linear-gradient(transparent, rgba(74,124,255,0.2));
+        }
+
+        .anzhiqiang .eye-glow {
+            background: linear-gradient(transparent, rgba(232,93,138,0.2));
+        }
+
+        /* 睫毛 */
+        .eye-lash {
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.4), transparent);
+            border-radius: 50% 50% 0 0;
+            z-index: 4;
         }
 
         /* 眨眼 */
         .char-container:not(.talking) .eye {
-            animation: blink 4s ease-in-out infinite;
+            animation: blink 4.5s ease-in-out infinite;
         }
 
         @keyframes blink {
-            0%, 45%, 55%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(0.05); }
+            0%, 44%, 56%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.03); }
         }
 
-        /* 开心表情 - 眯眼笑 */
+        /* 开心表情 */
         .happy .eye {
-            height: 14px !important;
+            height: 16px !important;
         }
         .happy .eye-white {
-            height: 14px;
+            height: 16px;
             border-radius: 50% 50% 0 0;
         }
         .happy .eye-iris,
         .happy .eye-pupil,
-        .happy .eye-shine-lg,
-        .happy .eye-shine-sm,
-        .happy .eye-gradient {
+        .happy .eye-highlight-1,
+        .happy .eye-highlight-2,
+        .happy .eye-highlight-3,
+        .happy .eye-glow,
+        .happy .eye-lash {
             display: none;
         }
 
         /* 惊讶表情 */
         .surprised .eye {
-            transform: scale(1.2);
+            transform: scale(1.15);
         }
         .surprised .eye-iris {
-            width: 24px;
-            height: 26px;
+            width: 26px;
+            height: 30px;
+        }
+
+        /* ===== 眉毛 ===== */
+        .char-brow-l, .char-brow-r {
+            position: absolute;
+            top: 25px;
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .char-brow-l { left: 15px; transform: rotate(-5deg); }
+        .char-brow-r { right: 15px; transform: rotate(5deg); }
+
+        .zhuyuanle .char-brow-l,
+        .zhuyuanle .char-brow-r {
+            background: linear-gradient(90deg, #2c3e50, #3d566e);
+        }
+
+        .anzhiqiang .char-brow-l,
+        .anzhiqiang .char-brow-r {
+            background: linear-gradient(90deg, #8a4a6a, #a06080);
+        }
+
+        .sad .char-brow-l { transform: rotate(-10deg) translateY(2px); }
+        .sad .char-brow-r { transform: rotate(10deg) translateY(2px); }
+
+        /* ===== 鼻子 ===== */
+        .char-nose {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 2px;
         }
 
         /* ===== 嘴巴 ===== */
         .char-mouth {
             position: absolute;
-            bottom: 22px;
+            bottom: 28px;
             left: 50%;
             transform: translateX(-50%);
             transition: all 0.3s;
         }
 
         .mouth-normal {
-            width: 16px;
+            width: 18px;
             height: 3px;
-            background: #e8a0a0;
+            background: linear-gradient(90deg, #e8a0a0, #d48080);
             border-radius: 2px;
         }
 
         .mouth-smile {
-            width: 22px;
+            width: 24px;
             height: 10px;
-            border: 3px solid #e8a0a0;
+            border: 2.5px solid #e8a0a0;
             border-top: none;
-            border-radius: 0 0 12px 12px;
+            border-radius: 0 0 14px 14px;
             background: transparent;
         }
 
         .mouth-sad {
-            width: 18px;
+            width: 20px;
             height: 8px;
-            border: 3px solid #e8a0a0;
+            border: 2.5px solid #e8a0a0;
             border-bottom: none;
-            border-radius: 10px 10px 0 0;
+            border-radius: 12px 12px 0 0;
             background: transparent;
             transform: translateX(-50%) translateY(3px);
         }
 
         .mouth-open {
             width: 16px;
-            height: 12px;
-            background: #d4556a;
+            height: 14px;
+            background: linear-gradient(180deg, #d4556a, #b8336a);
             border-radius: 50%;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .mouth-embarrassed {
-            width: 14px;
-            height: 6px;
+            width: 16px;
+            height: 7px;
             border: 2px solid #e8a0a0;
             border-top: none;
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 10px 10px;
             background: transparent;
             animation: mouthTremble 0.3s ease-in-out infinite;
         }
@@ -378,39 +465,38 @@
             50% { transform: translateX(-50%) translateX(1px); }
         }
 
-        /* 说话动画 */
         .talking .char-mouth {
-            animation: talk 0.25s ease-in-out infinite alternate;
+            animation: talk 0.2s ease-in-out infinite alternate;
         }
 
         @keyframes talk {
             0% { transform: translateX(-50%) scaleY(1); }
-            100% { transform: translateX(-50%) scaleY(0.4); }
+            100% { transform: translateX(-50%) scaleY(0.3); }
         }
 
-        /* ===== 头发 - 超精致二次元风格 ===== */
-        /* 朱元乐 - 蓝黑色短发 */
+        /* ===== 头发 - 原神风格精致发型 ===== */
+        /* 朱元乐 - 深蓝黑碎发 */
         .zhuyuanle .hair-back {
             position: absolute;
-            top: -20px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 125px;
-            height: 90px;
-            background: linear-gradient(180deg, #2c3e50, #34495e);
-            border-radius: 50% 50% 30% 30%;
+            width: 135px;
+            height: 100px;
+            background: linear-gradient(180deg, #1a2540, #2c3e50, #1a2540);
+            border-radius: 50% 50% 35% 35%;
             z-index: -1;
         }
 
         .zhuyuanle .hair-top {
             position: absolute;
-            top: -25px;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            width: 115px;
-            height: 50px;
-            background: linear-gradient(180deg, #3d566e, #2c3e50);
-            border-radius: 50% 50% 20% 20%;
+            width: 125px;
+            height: 55px;
+            background: linear-gradient(180deg, #243550, #1a2540);
+            border-radius: 50% 50% 25% 25%;
             z-index: 6;
         }
 
@@ -419,255 +505,414 @@
             top: 5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 40px;
-            background: linear-gradient(180deg, #3d566e, #2c3e50);
-            border-radius: 0 0 40% 40%;
+            width: 108px;
+            height: 45px;
             z-index: 7;
-            clip-path: polygon(0% 0%, 15% 100%, 35% 70%, 50% 100%, 65% 70%, 85% 100%, 100% 0%);
+            overflow: hidden;
+        }
+
+        .zhuyuanle .hair-bangs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #243550, #1a2540);
+            clip-path: polygon(0% 0%, 12% 100%, 28% 65%, 45% 95%, 55% 95%, 72% 65%, 88% 100%, 100% 0%);
         }
 
         .zhuyuanle .hair-side-l,
         .zhuyuanle .hair-side-r {
             position: absolute;
-            top: 25px;
-            width: 18px;
-            height: 45px;
-            background: linear-gradient(180deg, #2c3e50, #34495e);
-            border-radius: 0 0 50% 50%;
+            top: 30px;
+            width: 20px;
+            height: 55px;
+            background: linear-gradient(180deg, #1a2540, #2c3e50);
+            border-radius: 0 0 45% 45%;
             z-index: 4;
         }
-        .zhuyuanle .hair-side-l { left: 12px; transform: rotate(3deg); }
-        .zhuyuanle .hair-side-r { right: 12px; transform: rotate(-3deg); }
+        .zhuyuanle .hair-side-l { left: 8px; transform: rotate(3deg); }
+        .zhuyuanle .hair-side-r { right: 8px; transform: rotate(-3deg); }
 
         /* 头发高光 */
         .zhuyuanle .hair-shine {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 20px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            border-radius: 50%;
-            z-index: 8;
-        }
-
-        /* 安志强 - 粉紫色双马尾 */
-        .anzhiqiang .hair-back {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 250px;
-            background: linear-gradient(180deg, #c06090, #d4789e, #e8a0c0);
-            border-radius: 50% 50% 30% 30%;
-            z-index: -1;
-        }
-
-        .anzhiqiang .hair-top {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 55px;
-            background: linear-gradient(180deg, #d4789e, #c06090);
-            border-radius: 50% 50% 20% 20%;
-            z-index: 6;
-        }
-
-        .anzhiqiang .hair-bangs {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 105px;
-            height: 45px;
-            background: linear-gradient(180deg, #d4789e, #c06090);
-            border-radius: 0 0 45% 45%;
-            z-index: 7;
-            clip-path: polygon(0% 0%, 20% 100%, 40% 60%, 55% 100%, 70% 60%, 80% 100%, 100% 0%);
-        }
-
-        /* 双马尾 */
-        .anzhiqiang .hair-twin-l,
-        .anzhiqiang .hair-twin-r {
-            position: absolute;
-            top: 20px;
-            width: 30px;
-            height: 150px;
-            background: linear-gradient(180deg, #c06090, #d4789e, #e8a0c0);
-            border-radius: 50% 50% 40% 40%;
-            z-index: 3;
-        }
-
-        .anzhiqiang .hair-twin-l {
-            left: -15px;
-            transform: rotate(8deg);
-            animation: twinSwayL 3s ease-in-out infinite;
-        }
-
-        .anzhiqiang .hair-twin-r {
-            right: -15px;
-            transform: rotate(-8deg);
-            animation: twinSwayR 3s ease-in-out infinite;
-        }
-
-        @keyframes twinSwayL {
-            0%, 100% { transform: rotate(8deg); }
-            50% { transform: rotate(5deg); }
-        }
-
-        @keyframes twinSwayR {
-            0%, 100% { transform: rotate(-8deg); }
-            50% { transform: rotate(-5deg); }
-        }
-
-        /* 发饰 - 蝴蝶结 */
-        .anzhiqiang .hair-ribbon-l,
-        .anzhiqiang .hair-ribbon-r {
-            position: absolute;
-            top: 15px;
-            width: 20px;
-            height: 15px;
-            background: #ff6b8a;
-            z-index: 8;
-        }
-
-        .anzhiqiang .hair-ribbon-l {
-            left: -5px;
-            border-radius: 50% 0 50% 50%;
-            transform: rotate(-10deg);
-        }
-
-        .anzhiqiang .hair-ribbon-r {
-            right: -5px;
-            border-radius: 0 50% 50% 50%;
-            transform: rotate(10deg);
-        }
-
-        .anzhiqiang .ribbon-center-l,
-        .anzhiqiang .ribbon-center-r {
-            position: absolute;
-            top: 20px;
-            width: 8px;
-            height: 8px;
-            background: #ff4070;
-            border-radius: 50%;
-            z-index: 9;
-        }
-
-        .anzhiqiang .ribbon-center-l { left: 2px; }
-        .anzhiqiang .ribbon-center-r { right: 2px; }
-
-        /* 头发高光 */
-        .anzhiqiang .hair-shine {
             position: absolute;
             top: -15px;
             left: 50%;
             transform: translateX(-50%);
             width: 70px;
             height: 25px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            background: linear-gradient(90deg, transparent 10%, rgba(100,150,255,0.15) 40%, rgba(150,200,255,0.2) 50%, rgba(100,150,255,0.15) 60%, transparent 90%);
             border-radius: 50%;
             z-index: 8;
         }
 
-        /* ===== 身体 - Q版比例 ===== */
-        .char-body {
+        .zhuyuanle .hair-shine-2 {
             position: absolute;
-            top: 110px;
+            top: -5px;
+            left: 35%;
+            width: 40px;
+            height: 15px;
+            background: linear-gradient(90deg, transparent, rgba(150,200,255,0.1), transparent);
+            border-radius: 50%;
+            z-index: 8;
+        }
+
+        /* 安志强 - 渐变粉紫长发 */
+        .anzhiqiang .hair-back {
+            position: absolute;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 120px;
+            width: 150px;
+            height: 280px;
+            background: linear-gradient(180deg, #8a3070 0%, #b85090 30%, #d070a8 60%, #e8a0c8 100%);
+            border-radius: 50% 50% 35% 35%;
+            z-index: -1;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .anzhiqiang .hair-top {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 60px;
+            background: linear-gradient(180deg, #9a4080, #8a3070);
+            border-radius: 50% 50% 25% 25%;
+            z-index: 6;
+        }
+
+        .anzhiqiang .hair-bangs {
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 112px;
+            height: 48px;
+            z-index: 7;
+            overflow: hidden;
+        }
+
+        .anzhiqiang .hair-bangs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #9a4080, #8a3070);
+            clip-path: polygon(0% 0%, 18% 100%, 35% 55%, 50% 90%, 65% 55%, 82% 100%, 100% 0%);
+        }
+
+        /* 侧发 */
+        .anzhiqiang .hair-side-l,
+        .anzhiqiang .hair-side-r {
+            position: absolute;
+            top: 25px;
+            width: 28px;
+            height: 160px;
+            z-index: 4;
+        }
+
+        .anzhiqiang .hair-side-l {
+            left: 2px;
+            background: linear-gradient(180deg, #8a3070, #b85090, #d070a8);
+            border-radius: 0 0 50% 40%;
+            transform: rotate(3deg);
+            animation: hairSwayL 4s ease-in-out infinite;
+        }
+
+        .anzhiqiang .hair-side-r {
+            right: 2px;
+            background: linear-gradient(180deg, #8a3070, #b85090, #d070a8);
+            border-radius: 0 0 40% 50%;
+            transform: rotate(-3deg);
+            animation: hairSwayR 4s ease-in-out infinite;
+        }
+
+        @keyframes hairSwayL {
+            0%, 100% { transform: rotate(3deg); }
+            50% { transform: rotate(1deg); }
+        }
+
+        @keyframes hairSwayR {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(-1deg); }
+        }
+
+        /* 发饰 - 原神风格精致发饰 */
+        .anzhiqiang .hair-accessory {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            z-index: 10;
+        }
+
+        .anzhiqiang .accessory-base {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #ff6b8a, #e85d8a);
+            border-radius: 50%;
+            box-shadow:
+                0 0 10px rgba(255,107,138,0.5),
+                inset 0 2px 5px rgba(255,255,255,0.3);
+            position: relative;
+        }
+
+        .anzhiqiang .accessory-gem {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle at 35% 35%, #fff, #ffb3c6, #ff6b8a);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255,255,255,0.5);
+        }
+
+        .anzhiqiang .accessory-wing-l,
+        .anzhiqiang .accessory-wing-r {
+            position: absolute;
+            top: 50%;
+            width: 18px;
+            height: 10px;
+            background: linear-gradient(90deg, #ff6b8a, #ff8fab);
+            transform: translateY(-50%);
+        }
+
+        .anzhiqiang .accessory-wing-l {
+            left: -12px;
+            border-radius: 50% 0 0 50%;
+            transform: translateY(-50%) rotate(-10deg);
+        }
+
+        .anzhiqiang .accessory-wing-r {
+            right: -12px;
+            border-radius: 0 50% 50% 0;
+            transform: translateY(-50%) rotate(10deg);
+        }
+
+        /* 头发高光 */
+        .anzhiqiang .hair-shine {
+            position: absolute;
+            top: -18px;
+            left: 45%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 30px;
+            background: linear-gradient(90deg, transparent 5%, rgba(255,200,230,0.2) 35%, rgba(255,220,240,0.25) 50%, rgba(255,200,230,0.2) 65%, transparent 95%);
+            border-radius: 50%;
+            z-index: 8;
+        }
+
+        .anzhiqiang .hair-shine-2 {
+            position: absolute;
+            top: 50px;
+            left: 25%;
+            width: 30px;
+            height: 80px;
+            background: linear-gradient(180deg, transparent, rgba(255,200,230,0.1), transparent);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        /* ===== 身体 - 原神风格 ===== */
+        .char-body {
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 140px;
             z-index: 2;
         }
 
         /* 上衣 */
         .char-shirt {
             width: 100%;
-            height: 70px;
-            background: #fff;
-            border-radius: 10px 10px 5px 5px;
+            height: 80px;
             position: relative;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 12px 12px 5px 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
         }
 
-        /* 领子 */
+        .zhuyuanle .char-shirt {
+            background: linear-gradient(180deg, #f8f8f8, #eaeaea);
+        }
+
+        .anzhiqiang .char-shirt {
+            background: linear-gradient(180deg, #f8f8f8, #f0f0f0);
+        }
+
+        /* 衣领 */
         .char-collar {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 20px;
-            background: #fff;
-            clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+            width: 55px;
+            height: 22px;
+            overflow: hidden;
         }
 
-        /* 领结/领带 */
+        .char-collar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: #fff;
+            border-right: 1px solid rgba(0,0,0,0.1);
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+        }
+
+        .char-collar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: #fff;
+            border-left: 1px solid rgba(0,0,0,0.1);
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+        }
+
+        /* 领结/蝴蝶结 */
         .char-bow {
             position: absolute;
-            top: 8px;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 15px;
             z-index: 3;
         }
 
         .zhuyuanle .char-bow {
-            background: #3498db;
-            clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%);
+            width: 16px;
+            height: 20px;
+        }
+
+        .zhuyuanle .bow-knot {
+            width: 100%;
+            height: 100%;
+            background: #3a6bc5;
+            clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 20% 100%, 0% 35%);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .zhuyuanle .bow-center {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: #2a5ab5;
+            border-radius: 50%;
         }
 
         .anzhiqiang .char-bow {
+            width: 24px;
+            height: 18px;
+        }
+
+        .anzhiqiang .bow-wing-l,
+        .anzhiqiang .bow-wing-r {
+            position: absolute;
+            top: 0;
+            width: 12px;
+            height: 18px;
             background: #ff6b8a;
-            clip-path: polygon(0% 0%, 30% 50%, 0% 100%, 50% 70%, 100% 100%, 70% 50%, 100% 0%, 50% 30%);
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .anzhiqiang .bow-wing-l {
+            left: 0;
+            transform: rotate(-15deg);
+        }
+
+        .anzhiqiang .bow-wing-r {
+            right: 0;
+            transform: rotate(15deg);
+        }
+
+        .anzhiqiang .bow-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: #e85d8a;
+            border-radius: 50%;
+            z-index: 1;
         }
 
         /* 袖子 */
         .char-sleeve-l,
         .char-sleeve-r {
             position: absolute;
-            top: 5px;
-            width: 30px;
-            height: 50px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            top: 8px;
+            width: 32px;
+            height: 55px;
+            border-radius: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
 
-        .char-sleeve-l { left: -20px; transform: rotate(10deg); }
-        .char-sleeve-r { right: -20px; transform: rotate(-10deg); }
+        .zhuyuanle .char-sleeve-l,
+        .zhuyuanle .char-sleeve-r {
+            background: linear-gradient(180deg, #f0f0f0, #e0e0e0);
+        }
+
+        .anzhiqiang .char-sleeve-l,
+        .anzhiqiang .char-sleeve-r {
+            background: linear-gradient(180deg, #f0f0f0, #e8e8e8);
+        }
+
+        .char-sleeve-l { left: -22px; transform: rotate(8deg); }
+        .char-sleeve-r { right: -22px; transform: rotate(-8deg); }
 
         /* 手 */
         .char-hand-l,
         .char-hand-r {
             position: absolute;
-            top: 45px;
-            width: 18px;
-            height: 18px;
-            background: #fff5f0;
+            top: 52px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #fff5f0, #ffe8dd);
             border-radius: 50%;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .char-hand-l { left: -15px; }
-        .char-hand-r { right: -15px; }
+        .char-hand-l { left: -18px; }
+        .char-hand-r { right: -18px; }
 
         /* 裙子 */
         .char-skirt {
-            width: 110px;
-            height: 55px;
-            background: #2c3e50;
+            width: 120px;
+            height: 65px;
             margin-left: -5px;
-            border-radius: 0 0 30% 30%;
             position: relative;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            border-radius: 0 0 35% 35%;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        .zhuyuanle .char-skirt {
+            background: linear-gradient(180deg, #2c3e50, #1a2540);
+        }
+
+        .anzhiqiang .char-skirt {
+            background: linear-gradient(180deg, #2c3e50, #1a2540);
         }
 
         .char-skirt::before {
@@ -677,7 +922,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
         }
 
         /* 裙褶 */
@@ -686,61 +931,76 @@
             top: 0;
             width: 2px;
             height: 100%;
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.08);
         }
 
-        /* 腿 */
+        /* 腿部 */
         .char-legs {
             position: absolute;
-            bottom: -60px;
+            bottom: -75px;
             left: 50%;
             transform: translateX(-50%);
-            width: 70px;
-            height: 60px;
+            width: 80px;
+            height: 75px;
             display: flex;
             justify-content: space-between;
         }
 
         .char-leg {
-            width: 20px;
-            height: 55px;
-            background: #fff5f0;
-            border-radius: 10px;
+            width: 22px;
+            height: 70px;
+            background: linear-gradient(180deg, #fff5f0, #ffe8dd);
+            border-radius: 11px;
             position: relative;
         }
 
-        /* 袜子 */
+        /* 长袜 */
         .char-sock {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 30px;
-            background: #fff;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            height: 40px;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+        }
+
+        .zhuyuanle .char-sock {
+            background: linear-gradient(180deg, #1a2540, #2c3e50);
+        }
+
+        .anzhiqiang .char-sock {
+            background: linear-gradient(180deg, #1a2540, #2c3e50);
         }
 
         /* 鞋子 */
         .char-shoe {
             position: absolute;
-            bottom: -8px;
-            left: -3px;
-            width: 26px;
-            height: 12px;
-            background: #2c3e50;
-            border-radius: 8px 8px 5px 5px;
+            bottom: -10px;
+            left: -4px;
+            width: 30px;
+            height: 14px;
+            border-radius: 10px 10px 6px 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .zhuyuanle .char-shoe {
+            background: linear-gradient(180deg, #2c3e50, #1a2540);
+        }
+
+        .anzhiqiang .char-shoe {
+            background: linear-gradient(180deg, #2c3e50, #1a2540);
         }
 
         /* ===== 动画效果 ===== */
         .waving .char-sleeve-r,
         .waving .char-hand-r {
-            animation: wave 0.4s ease-in-out infinite alternate;
-            transform-origin: left center;
+            animation: wave 0.5s ease-in-out infinite alternate;
+            transform-origin: left bottom;
         }
 
         @keyframes wave {
-            0% { transform: rotate(-10deg); }
-            100% { transform: rotate(-40deg); }
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(-35deg); }
         }
 
         .happy .char-container {
@@ -749,7 +1009,7 @@
 
         @keyframes happyBounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
 
         .surprised .char-container {
@@ -758,7 +1018,7 @@
 
         @keyframes surpriseJump {
             0% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-12px); }
             100% { transform: translateY(0); }
         }
 
@@ -768,7 +1028,7 @@
 
         @keyframes sadDroop {
             0% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(3px) rotate(-1deg); }
+            50% { transform: translateY(3px) rotate(-0.5deg); }
             100% { transform: translateY(0) rotate(0); }
         }
 
@@ -778,8 +1038,8 @@
 
         @keyframes embarrassedShake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-3px); }
-            75% { transform: translateX(3px); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
         }
 
         /* ===== 对话框 ===== */
@@ -788,43 +1048,43 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 190px;
-            background: linear-gradient(180deg, rgba(20,10,30,0.85), rgba(20,10,30,0.95));
-            backdrop-filter: blur(15px);
+            height: 200px;
+            background: linear-gradient(180deg, rgba(15,10,30,0.8), rgba(15,10,30,0.95));
+            backdrop-filter: blur(20px);
             z-index: 20;
             cursor: pointer;
-            border-top: 3px solid rgba(255,107,138,0.5);
+            border-top: 2px solid rgba(100,120,255,0.3);
         }
 
         #speaker-name {
             position: absolute;
-            top: -18px;
+            top: -16px;
             left: 30px;
-            background: linear-gradient(135deg, #ff6b8a, #ff8fab);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: #fff;
             padding: 8px 30px;
             border-radius: 20px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             letter-spacing: 3px;
-            box-shadow: 0 4px 15px rgba(255,107,138,0.4);
+            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
         }
 
         #dialogue-text {
-            color: #fff;
+            color: rgba(255,255,255,0.95);
             font-size: 17px;
             line-height: 1.9;
-            padding: 28px 40px;
+            padding: 30px 40px;
             letter-spacing: 1px;
             min-height: 100px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         #click-hint {
             position: absolute;
             bottom: 15px;
             right: 30px;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.3);
             font-size: 13px;
             animation: blink-hint 1.5s infinite;
         }
@@ -839,12 +1099,12 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(20,10,30,0.7);
+            background: rgba(15,10,30,0.7);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 30;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
         }
         #choices-overlay.active { display: flex; }
 
@@ -852,24 +1112,24 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-width: 450px;
+            max-width: 480px;
             width: 90%;
         }
 
         .choice-btn {
-            padding: 18px 28px;
+            padding: 20px 30px;
             font-size: 17px;
-            background: linear-gradient(135deg, rgba(255,107,138,0.9), rgba(255,143,171,0.9));
-            border: 2px solid rgba(255,255,255,0.3);
+            background: linear-gradient(135deg, rgba(102,126,234,0.85), rgba(118,75,162,0.85));
+            border: 1px solid rgba(255,255,255,0.2);
             color: #fff;
-            border-radius: 25px;
+            border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
             letter-spacing: 3px;
             backdrop-filter: blur(10px);
             animation: choiceAppear 0.5s ease-out backwards;
-            box-shadow: 0 5px 20px rgba(255,107,138,0.3);
+            box-shadow: 0 8px 25px rgba(102,126,234,0.3);
         }
 
         .choice-btn:nth-child(1) { animation-delay: 0.1s; }
@@ -883,9 +1143,9 @@
 
         .choice-btn:hover {
             transform: translateY(-3px);
-            background: linear-gradient(135deg, rgba(255,107,138,1), rgba(255,143,171,1));
-            border-color: rgba(255,255,255,0.6);
-            box-shadow: 0 8px 25px rgba(255,107,138,0.5);
+            background: linear-gradient(135deg, rgba(102,126,234,1), rgba(118,75,162,1));
+            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 12px 30px rgba(102,126,234,0.5);
         }
 
         /* ===== 菜单 ===== */
@@ -894,8 +1154,8 @@
             top: 20px;
             right: 20px;
             z-index: 50;
-            background: rgba(255,107,138,0.3);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(102,126,234,0.2);
+            border: 1px solid rgba(102,126,234,0.4);
             color: #fff;
             padding: 10px 20px;
             border-radius: 20px;
@@ -904,7 +1164,7 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s;
         }
-        #menu-btn:hover { background: rgba(255,107,138,0.5); transform: scale(1.05); }
+        #menu-btn:hover { background: rgba(102,126,234,0.4); transform: scale(1.05); }
 
         /* ===== 好感度 ===== */
         #affection-display {
@@ -912,19 +1172,19 @@
             top: 20px;
             left: 20px;
             z-index: 50;
-            background: rgba(20,10,30,0.6);
+            background: rgba(15,10,30,0.6);
             padding: 12px 20px;
             border-radius: 20px;
             color: #fff;
             font-size: 13px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,107,138,0.3);
+            border: 1px solid rgba(102,126,234,0.3);
         }
 
         .affection-bar {
             width: 100px;
             height: 6px;
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.1);
             border-radius: 3px;
             margin-top: 6px;
             overflow: hidden;
@@ -932,10 +1192,10 @@
 
         .affection-fill {
             height: 100%;
-            background: linear-gradient(90deg, #ff6b8a, #ff8fab, #ffb3c6);
+            background: linear-gradient(90deg, #667eea, #a78bfa, #c084fc);
             border-radius: 3px;
             transition: width 0.5s ease;
-            box-shadow: 0 0 10px rgba(255,107,138,0.5);
+            box-shadow: 0 0 10px rgba(102,126,234,0.5);
         }
 
         /* ===== 存档界面 ===== */
@@ -943,7 +1203,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(20,10,30,0.95);
+            background: rgba(15,10,30,0.95);
             display: none;
             justify-content: center;
             align-items: center;
@@ -953,13 +1213,13 @@
         #save-overlay.active { display: flex; }
 
         .save-container {
-            background: linear-gradient(135deg, #2a1a3e, #1a0a2e);
+            background: linear-gradient(135deg, #1a1a3e, #0f0a2e);
             border-radius: 25px;
             padding: 40px;
             max-width: 550px;
             width: 90%;
-            border: 1px solid rgba(255,107,138,0.3);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 1px solid rgba(102,126,234,0.3);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
         }
 
         .save-title {
@@ -968,7 +1228,7 @@
             text-align: center;
             margin-bottom: 25px;
             letter-spacing: 5px;
-            text-shadow: 0 0 20px rgba(255,107,138,0.5);
+            text-shadow: 0 0 20px rgba(102,126,234,0.5);
         }
 
         .save-slots {
@@ -978,8 +1238,8 @@
         }
 
         .save-slot {
-            background: rgba(255,107,138,0.1);
-            border: 1px solid rgba(255,107,138,0.2);
+            background: rgba(102,126,234,0.08);
+            border: 1px solid rgba(102,126,234,0.2);
             border-radius: 15px;
             padding: 18px;
             cursor: pointer;
@@ -987,34 +1247,34 @@
             color: #fff;
         }
         .save-slot:hover {
-            background: rgba(255,107,138,0.2);
-            border-color: rgba(255,107,138,0.5);
+            background: rgba(102,126,234,0.15);
+            border-color: rgba(102,126,234,0.5);
             transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(255,107,138,0.2);
+            box-shadow: 0 8px 20px rgba(102,126,234,0.2);
         }
 
-        .save-slot-title { font-size: 13px; color: #ff8fab; margin-bottom: 5px; }
-        .save-slot-info { font-size: 11px; color: rgba(255,255,255,0.5); }
+        .save-slot-title { font-size: 13px; color: #a78bfa; margin-bottom: 5px; }
+        .save-slot-info { font-size: 11px; color: rgba(255,255,255,0.4); }
 
         .close-save {
             display: block;
             margin: 20px auto 0;
             padding: 10px 40px;
-            background: rgba(255,107,138,0.2);
-            border: 1px solid rgba(255,107,138,0.4);
+            background: rgba(102,126,234,0.15);
+            border: 1px solid rgba(102,126,234,0.4);
             color: #fff;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
         }
-        .close-save:hover { background: rgba(255,107,138,0.4); }
+        .close-save:hover { background: rgba(102,126,234,0.3); }
 
         /* ===== 章节标题 ===== */
         #chapter-title {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #1a0a2e, #2a1a3e);
+            background: linear-gradient(135deg, #0f0a2e, #1a1a3e);
             display: none;
             justify-content: center;
             align-items: center;
@@ -1024,18 +1284,18 @@
         #chapter-title.active { display: flex; }
 
         .chapter-name {
-            font-size: 40px;
+            font-size: 42px;
             color: #fff;
-            letter-spacing: 10px;
+            letter-spacing: 12px;
             margin-bottom: 15px;
             animation: chapterFadeIn 1s ease-out;
-            text-shadow: 0 0 30px rgba(255,107,138,0.5);
+            text-shadow: 0 0 30px rgba(102,126,234,0.5);
         }
 
         .chapter-sub {
             font-size: 16px;
-            color: rgba(255,143,171,0.8);
-            letter-spacing: 5px;
+            color: rgba(167,139,250,0.8);
+            letter-spacing: 6px;
             animation: chapterFadeIn 1s ease-out 0.3s backwards;
         }
 
@@ -1049,7 +1309,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #ff6b8a, #ff8fab, #a18cd1);
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
             display: none;
             justify-content: center;
             align-items: center;
@@ -1059,11 +1319,11 @@
         #ending-screen.active { display: flex; }
 
         .ending-title {
-            font-size: 48px;
+            font-size: 50px;
             color: #fff;
             margin-bottom: 20px;
             letter-spacing: 10px;
-            text-shadow: 3px 3px 15px rgba(0,0,0,0.3);
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
             animation: titleFloat 3s ease-in-out infinite;
         }
 
@@ -1082,7 +1342,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #1a0a2e, #2a1a3e);
+            background: linear-gradient(135deg, #0f0a2e, #1a1a3e);
             display: none;
             justify-content: center;
             align-items: center;
@@ -1101,9 +1361,9 @@
             align-items: center;
             font-size: 90px;
             margin-bottom: 25px;
-            background: linear-gradient(135deg, rgba(255,107,138,0.2), rgba(161,140,209,0.2));
-            border: 1px solid rgba(255,107,138,0.3);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(167,139,250,0.15));
+            border: 1px solid rgba(102,126,234,0.3);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
         }
 
         .cg-text {
@@ -1112,19 +1372,19 @@
             text-align: center;
             letter-spacing: 4px;
             font-style: italic;
-            text-shadow: 0 0 20px rgba(255,107,138,0.5);
+            text-shadow: 0 0 20px rgba(102,126,234,0.5);
         }
 
         /* ===== 天气效果 ===== */
         .rain-drop {
             position: absolute;
-            width: 2px;
-            background: linear-gradient(transparent, rgba(174, 194, 224, 0.5));
+            width: 1.5px;
+            background: linear-gradient(transparent, rgba(150,170,255,0.4));
             animation: rain-fall linear infinite;
         }
         @keyframes rain-fall {
             0% { transform: translateY(-100vh); opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0.3; }
+            100% { transform: translateY(100vh); opacity: 0.2; }
         }
 
         .star {
@@ -1135,33 +1395,30 @@
         }
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
+            50% { opacity: 1; transform: scale(1.3); }
         }
 
         .sakura {
             position: absolute;
-            width: 12px;
-            height: 12px;
-            background: radial-gradient(circle, #ffb7c5 30%, #ffc0cb 60%, transparent);
+            background: radial-gradient(circle, rgba(255,183,197,0.8) 30%, rgba(255,192,203,0.4) 60%, transparent);
             border-radius: 50% 0 50% 50%;
             animation: sakura-fall linear infinite;
-            opacity: 0.8;
         }
         @keyframes sakura-fall {
-            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0.8; }
-            50% { transform: translateY(50vh) rotate(180deg) translateX(40px); }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(-15px); opacity: 0; }
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0.7; }
+            50% { transform: translateY(50vh) rotate(180deg) translateX(35px); }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(-10px); opacity: 0; }
         }
 
-        .heart {
+        .particle {
             position: absolute;
-            color: rgba(255,107,138,0.6);
-            font-size: 14px;
-            animation: heartFloat linear infinite;
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
         }
-        @keyframes heartFloat {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            50% { opacity: 0.8; }
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.3; }
             100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
@@ -1170,7 +1427,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #1a0a2e, #2a1a3e);
+            background: linear-gradient(135deg, #0f0a2e, #1a1a3e);
             z-index: 999;
             opacity: 0;
             pointer-events: none;
@@ -1252,19 +1509,19 @@
             endings: [],
 
             backgrounds: {
-                classroom: 'linear-gradient(180deg, #87CEEB 0%, #E8F4F8 30%, #DEB887 30%, #D2B48C 100%)',
-                hallway: 'linear-gradient(180deg, #87CEEB 0%, #F5F5DC 40%, #D2B48C 100%)',
-                playground: 'linear-gradient(180deg, #87CEEB 0%, #90EE90 50%, #228B22 100%)',
-                street: 'linear-gradient(180deg, #FFB347 0%, #FFCC80 30%, #808080 60%, #696969 100%)',
-                river: 'linear-gradient(180deg, #FF9A9E 0%, #FECFEF 20%, #4ECDC4 50%, #45B7D1 100%)',
-                bookstore: 'linear-gradient(180deg, #8B6914 0%, #D4A574 30%, #F5DEB3 100%)',
+                classroom: 'linear-gradient(180deg, #87CEEB 0%, #E8F4F8 35%, #C8B896 35%, #B8A886 100%)',
+                hallway: 'linear-gradient(180deg, #87CEEB 0%, #F0E8D8 40%, #C8B896 100%)',
+                playground: 'linear-gradient(180deg, #87CEEB 0%, #90EE90 50%, #2E8B57 100%)',
+                street: 'linear-gradient(180deg, #FFB347 0%, #FFCC80 35%, #808080 65%, #606060 100%)',
+                river: 'linear-gradient(180deg, #FF9A9E 0%, #FECFEF 25%, #52D4D4 55%, #45B7D1 100%)',
+                bookstore: 'linear-gradient(180deg, #8B6914 0%, #D4A574 35%, #F0D8A8 100%)',
                 home: 'linear-gradient(180deg, #FFF8DC 0%, #FFEFD5 50%, #DEB888 100%)',
-                mountain: 'linear-gradient(180deg, #1a1a2e 0%, #2a1a3e 30%, #0f3460 60%, #228B22 100%)',
-                rooftop: 'linear-gradient(180deg, #FF9A9E 0%, #FFB347 30%, #FFD700 60%, #DEB888 100%)',
-                festival: 'linear-gradient(180deg, #1a1a2e 0%, #2a1a3e 30%, #ff6b8a 60%, #ffd700 100%)',
-                sakura: 'linear-gradient(180deg, #FFB7C5 0%, #FFD1DC 30%, #90EE90 60%, #228B22 100%)',
-                night: 'linear-gradient(180deg, #0c0c1d 0%, #1a1a2e 50%, #2a1a3e 100%)',
-                sunset: 'linear-gradient(180deg, #FF9A9E 0%, #FFB347 25%, #FFD700 50%, #87CEEB 100%)'
+                mountain: 'linear-gradient(180deg, #0f0a2e 0%, #1a1a3e 35%, #0f3460 65%, #2E8B57 100%)',
+                rooftop: 'linear-gradient(180deg, #FF9A9E 0%, #FFB347 35%, #FFD700 65%, #DEB888 100%)',
+                festival: 'linear-gradient(180deg, #0f0a2e 0%, #1a1a3e 35%, #ff6b8a 65%, #ffd700 100%)',
+                sakura: 'linear-gradient(180deg, #FFB7C5 0%, #FFD1DC 35%, #90EE90 65%, #2E8B57 100%)',
+                night: 'linear-gradient(180deg, #050510 0%, #0f0a2e 50%, #1a1a3e 100%)',
+                sunset: 'linear-gradient(180deg, #FF9A9E 0%, #FFB347 30%, #FFD700 55%, #87CEEB 100%)'
             },
 
             characters: {
@@ -1276,7 +1533,7 @@
             }
         };
 
-        // ===== 二次元萝莉风格角色渲染 =====
+        // ===== 原神风格角色渲染 =====
         function renderCharacter(charId, emotion = 'normal', position = 'center') {
             const char = Engine.characters[charId];
             if (!char) return '';
@@ -1294,29 +1551,40 @@
                             <div class="char-face">
                                 <div class="hair-bangs"></div>
 
+                                <!-- 眉毛 -->
+                                <div class="char-brow-l"></div>
+                                <div class="char-brow-r"></div>
+
                                 <!-- 眼睛 -->
                                 <div class="char-eyes">
                                     <div class="eye">
                                         <div class="eye-white">
+                                            <div class="eye-lash"></div>
                                             <div class="eye-iris">
                                                 <div class="eye-pupil"></div>
                                             </div>
-                                            <div class="eye-shine-lg"></div>
-                                            <div class="eye-shine-sm"></div>
-                                            <div class="eye-gradient"></div>
+                                            <div class="eye-highlight-1"></div>
+                                            <div class="eye-highlight-2"></div>
+                                            <div class="eye-highlight-3"></div>
+                                            <div class="eye-glow"></div>
                                         </div>
                                     </div>
                                     <div class="eye">
                                         <div class="eye-white">
+                                            <div class="eye-lash"></div>
                                             <div class="eye-iris">
                                                 <div class="eye-pupil"></div>
                                             </div>
-                                            <div class="eye-shine-lg"></div>
-                                            <div class="eye-shine-sm"></div>
-                                            <div class="eye-gradient"></div>
+                                            <div class="eye-highlight-1"></div>
+                                            <div class="eye-highlight-2"></div>
+                                            <div class="eye-highlight-3"></div>
+                                            <div class="eye-glow"></div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- 鼻子 -->
+                                <div class="char-nose"></div>
 
                                 <!-- 腮红 -->
                                 <div class="char-blush-l"></div>
@@ -1332,13 +1600,15 @@
                             <div class="hair-side-l"></div>
                             <div class="hair-side-r"></div>
                             <div class="hair-shine"></div>
+                            <div class="hair-shine-2"></div>
                             ${isHeroine ? `
-                                <div class="hair-twin-l"></div>
-                                <div class="hair-twin-r"></div>
-                                <div class="hair-ribbon-l"></div>
-                                <div class="hair-ribbon-r"></div>
-                                <div class="ribbon-center-l"></div>
-                                <div class="ribbon-center-r"></div>
+                                <div class="hair-accessory">
+                                    <div class="accessory-base">
+                                        <div class="accessory-gem"></div>
+                                    </div>
+                                    <div class="accessory-wing-l"></div>
+                                    <div class="accessory-wing-r"></div>
+                                </div>
                             ` : ''}
                         </div>
 
@@ -1346,7 +1616,16 @@
                         <div class="char-body">
                             <div class="char-shirt">
                                 <div class="char-collar"></div>
-                                <div class="char-bow"></div>
+                                <div class="char-bow">
+                                    ${isHeroine ? `
+                                        <div class="bow-wing-l"></div>
+                                        <div class="bow-wing-r"></div>
+                                        <div class="bow-center"></div>
+                                    ` : `
+                                        <div class="bow-knot"></div>
+                                        <div class="bow-center"></div>
+                                    `}
+                                </div>
                             </div>
                             <div class="char-sleeve-l"></div>
                             <div class="char-sleeve-r"></div>
@@ -1944,42 +2223,43 @@
                     const drop = document.createElement('div');
                     drop.className = 'rain-drop';
                     drop.style.left = Math.random() * 100 + '%';
-                    drop.style.height = Math.random() * 15 + 8 + 'px';
-                    drop.style.animationDuration = Math.random() * 0.5 + 0.5 + 's';
+                    drop.style.height = Math.random() * 12 + 6 + 'px';
+                    drop.style.animationDuration = Math.random() * 0.4 + 0.4 + 's';
                     drop.style.animationDelay = Math.random() * 2 + 's';
                     layer.appendChild(drop);
                 }
             } else if (type === 'stars') {
-                for (let i = 0; i < 60; i++) {
+                for (let i = 0; i < 70; i++) {
                     const star = document.createElement('div');
                     star.className = 'star';
                     star.style.left = Math.random() * 100 + '%';
-                    star.style.top = Math.random() * 50 + '%';
+                    star.style.top = Math.random() * 55 + '%';
                     star.style.animationDelay = Math.random() * 3 + 's';
-                    const size = Math.random() * 3 + 1;
+                    const size = Math.random() * 2.5 + 0.8;
                     star.style.width = size + 'px';
                     star.style.height = size + 'px';
                     layer.appendChild(star);
                 }
-                // 添加爱心特效
-                for (let i = 0; i < 10; i++) {
-                    const heart = document.createElement('div');
-                    heart.className = 'heart';
-                    heart.textContent = '♥';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.animationDuration = Math.random() * 5 + 5 + 's';
-                    heart.style.animationDelay = Math.random() * 5 + 's';
-                    heart.style.fontSize = Math.random() * 10 + 10 + 'px';
-                    layer.appendChild(heart);
+                for (let i = 0; i < 15; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.animationDuration = Math.random() * 6 + 4 + 's';
+                    p.style.animationDelay = Math.random() * 5 + 's';
+                    const size = Math.random() * 4 + 2;
+                    p.style.width = size + 'px';
+                    p.style.height = size + 'px';
+                    p.style.background = `rgba(${150+Math.random()*100}, ${130+Math.random()*100}, 255, ${0.3+Math.random()*0.3})`;
+                    layer.appendChild(p);
                 }
             } else if (type === 'sakura') {
-                for (let i = 0; i < 35; i++) {
+                for (let i = 0; i < 30; i++) {
                     const sakura = document.createElement('div');
                     sakura.className = 'sakura';
                     sakura.style.left = Math.random() * 100 + '%';
-                    sakura.style.animationDuration = Math.random() * 3 + 4 + 's';
-                    sakura.style.animationDelay = Math.random() * 5 + 's';
-                    const size = Math.random() * 8 + 8;
+                    sakura.style.animationDuration = Math.random() * 3 + 3.5 + 's';
+                    sakura.style.animationDelay = Math.random() * 4 + 's';
+                    const size = Math.random() * 6 + 8;
                     sakura.style.width = size + 'px';
                     sakura.style.height = size + 'px';
                     layer.appendChild(sakura);
@@ -2006,7 +2286,6 @@
                 return;
             }
 
-            // 显示角色
             if (line.speaker !== 'narrator' && line.position) {
                 const charLayer = document.getElementById('character-layer');
                 charLayer.innerHTML = renderCharacter(line.speaker, line.emotion, line.position);
