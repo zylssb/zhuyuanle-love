@@ -3,119 +3,1524 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>你喜欢朱元乐吗？</title>
+    <title>《夏日心事》 - 校园青春 Galgame</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @font-face {
+            font-family: 'GameFont';
+            src: local('Microsoft YaHei'), local('PingFang SC'), local('Noto Sans SC');
         }
 
         body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: "Microsoft YaHei", sans-serif;
+            font-family: 'GameFont', sans-serif;
+            background: #000;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
         }
 
-        .container {
-            background: white;
+        /* 标题画面 */
+        #title-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s;
+        }
+
+        #title-screen.hidden { opacity: 0; pointer-events: none; }
+
+        .title-text {
+            font-size: 48px;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            letter-spacing: 8px;
+        }
+
+        .title-subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 60px;
+            letter-spacing: 4px;
+        }
+
+        .title-btn {
+            padding: 15px 60px;
+            font-size: 20px;
+            background: rgba(255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.8);
+            color: #fff;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+            letter-spacing: 4px;
+            backdrop-filter: blur(10px);
+        }
+
+        .title-btn:hover {
+            background: rgba(255,255,255,0.6);
+            transform: scale(1.05);
+        }
+
+        /* 游戏主界面 */
+        #game-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
+        }
+
+        #game-container.active { display: block; }
+
+        /* 背景 */
+        #bg-layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            transition: background 1s ease;
+        }
+
+        /* 天气效果 */
+        .weather-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* 角色层 */
+        #character-layer {
+            position: absolute;
+            bottom: 180px;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 10;
+        }
+
+        .character {
+            position: absolute;
+            width: 200px;
+            height: 400px;
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .character.left { left: 15%; }
+        .character.center { left: 50%; transform: translateX(-50%); }
+        .character.right { right: 15%; }
+
+        .char-body {
+            width: 120px;
+            height: 200px;
+            border-radius: 60px 60px 30px 30px;
+            position: relative;
+        }
+
+        .char-head {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .char-hair {
+            position: absolute;
+            top: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 50px;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .char-eyes {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .eye {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+        }
+
+        .eye.happy {
+            height: 6px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .char-mouth {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 8px;
+            border-radius: 0 0 10px 10px;
+            background: #e74c3c;
+        }
+
+        .char-mouth.smile {
+            width: 20px;
+            height: 10px;
+        }
+
+        .char-mouth.sad {
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* 朱元乐 - 内敛温柔少年 */
+        .zhuyuanle .char-body { background: linear-gradient(180deg, #3498db, #2980b9); }
+        .zhuyuanle .char-head { background: #fdebd0; }
+        .zhuyuanle .char-hair { background: #2c3e50; }
+        .zhuyuanle .char-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: #2c3e50;
+            border-radius: 0 0 30px 30px;
+        }
+
+        /* 安志强 - 爽朗飒气女主 */
+        .anzhiqiang .char-body { background: linear-gradient(180deg, #e74c3c, #c0392b); }
+        .anzhiqiang .char-head { background: #fdebd0; }
+        .anzhiqiang .char-hair {
+            background: #8e44ad;
+            width: 100px;
+            height: 70px;
+            border-radius: 50% 50% 30% 30%;
+        }
+        .anzhiqiang .char-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: #2c3e50;
+            border-radius: 0 0 30px 30px;
+        }
+
+        /* 对话框 */
+        #dialogue-box {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+            backdrop-filter: blur(10px);
+            z-index: 20;
+            cursor: pointer;
+            border-top: 2px solid rgba(255,255,255,0.1);
+        }
+
+        #speaker-name {
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 5px 25px;
             border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        #dialogue-text {
+            color: #fff;
+            font-size: 18px;
+            line-height: 1.8;
+            padding: 25px 40px;
+            letter-spacing: 1px;
+            min-height: 100px;
+        }
+
+        #click-hint {
+            position: absolute;
+            bottom: 15px;
+            right: 30px;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* 选项界面 */
+        #choices-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+        }
+
+        #choices-overlay.active { display: flex; }
+
+        .choices-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             max-width: 500px;
             width: 90%;
         }
 
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        button {
-            padding: 15px 40px;
-            font-size: 20px;
-            border: none;
-            border-radius: 10px;
+        .choice-btn {
+            padding: 20px 30px;
+            font-size: 18px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            border: 2px solid rgba(255,255,255,0.3);
+            color: #fff;
+            border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: bold;
+            text-align: left;
+            letter-spacing: 2px;
+            backdrop-filter: blur(10px);
         }
 
-        .btn-yes {
-            background: #4CAF50;
-            color: white;
+        .choice-btn:hover {
+            transform: translateX(10px);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 1), rgba(118, 75, 162, 1));
+            border-color: rgba(255,255,255,0.6);
         }
 
-        .btn-yes:hover {
-            background: #45a049;
-            transform: scale(1.05);
+        /* 菜单 */
+        #menu-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
         }
 
-        .btn-no {
-            background: #f44336;
-            color: white;
-        }
+        #menu-btn:hover { background: rgba(0,0,0,0.7); }
 
-        .btn-no:hover {
-            background: #da190b;
-            transform: scale(1.05);
-        }
-
-        .result {
-            margin-top: 30px;
-            font-size: 24px;
-            color: #333;
+        /* 存档界面 */
+        #save-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
             display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
         }
 
-        .result.show {
+        #save-overlay.active { display: flex; }
+
+        .save-container {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .save-title {
+            color: #fff;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 4px;
+        }
+
+        .save-slots {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .save-slot {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #fff;
+        }
+
+        .save-slot:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #667eea;
+        }
+
+        .save-slot-title { font-size: 14px; color: #667eea; margin-bottom: 5px; }
+        .save-slot-info { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+        .close-save {
             display: block;
-            animation: fadeIn 0.5s;
+            margin: 20px auto 0;
+            padding: 10px 40px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            border-radius: 20px;
+            cursor: pointer;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* CG 回忆 */
+        #cg-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 60;
+            flex-direction: column;
+        }
+
+        #cg-overlay.active { display: flex; }
+
+        .cg-scene {
+            width: 80%;
+            max-width: 800px;
+            height: 60vh;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .cg-text {
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+            letter-spacing: 4px;
+            font-style: italic;
+        }
+
+        /* 结局画面 */
+        #ending-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 200;
+        }
+
+        #ending-screen.active { display: flex; }
+
+        .ending-title {
+            font-size: 48px;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 8px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .ending-desc {
+            font-size: 18px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        /* 转场 */
+        #transition {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        #transition.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* 章节标题 */
+        #chapter-title {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 80;
+        }
+
+        #chapter-title.active { display: flex; }
+
+        .chapter-name {
+            font-size: 36px;
+            color: #fff;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+        }
+
+        .chapter-sub {
+            font-size: 16px;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 4px;
+        }
+
+        /* 雨滴效果 */
+        .rain-drop {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(transparent, rgba(174, 194, 224, 0.6));
+            animation: rain-fall linear infinite;
+        }
+
+        @keyframes rain-fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0.3; }
+        }
+
+        /* 星星效果 */
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* 樱花效果 */
+        .sakura {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: radial-gradient(circle, #ffb7c5, transparent);
+            border-radius: 50% 0 50% 50%;
+            animation: sakura-fall linear infinite;
+        }
+
+        @keyframes sakura-fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>你是否喜欢朱元乐？</h1>
-        <div class="buttons">
-            <button class="btn-yes" onclick="answer('yes')">是</button>
-            <button class="btn-no" onclick="answer('no')">否</button>
+    <!-- 转场 -->
+    <div id="transition"></div>
+
+    <!-- 标题画面 -->
+    <div id="title-screen">
+        <div class="title-text">夏日心事</div>
+        <div class="title-subtitle">~ 校园青春 Galgame ~</div>
+        <button class="title-btn" onclick="startGame()">开始游戏</button>
+        <button class="title-btn" onclick="loadGame()">继续游戏</button>
+        <button class="title-btn" onclick="showCG()">CG 回忆</button>
+    </div>
+
+    <!-- 游戏主界面 -->
+    <div id="game-container">
+        <div id="bg-layer"></div>
+        <div id="weather-layer" class="weather-overlay"></div>
+        <div id="character-layer"></div>
+        <div id="dialogue-box">
+            <div id="speaker-name"></div>
+            <div id="dialogue-text"></div>
+            <div id="click-hint">▼ 点击继续</div>
         </div>
-        <div class="result" id="result"></div>
+        <button id="menu-btn" onclick="toggleSave()">菜单</button>
+    </div>
+
+    <!-- 选项 -->
+    <div id="choices-overlay">
+        <div class="choices-container" id="choices-container"></div>
+    </div>
+
+    <!-- 存档 -->
+    <div id="save-overlay">
+        <div class="save-container">
+            <div class="save-title">存档管理</div>
+            <div class="save-slots" id="save-slots"></div>
+            <button class="close-save" onclick="toggleSave()">返回</button>
+        </div>
+    </div>
+
+    <!-- 章节标题 -->
+    <div id="chapter-title">
+        <div class="chapter-name" id="chapter-name"></div>
+        <div class="chapter-sub" id="chapter-sub"></div>
+    </div>
+
+    <!-- CG -->
+    <div id="cg-overlay">
+        <div class="cg-scene" id="cg-scene"></div>
+        <div class="cg-text" id="cg-text"></div>
+        <button class="close-save" onclick="closeCG()" style="margin-top:30px">返回</button>
+    </div>
+
+    <!-- 结局 -->
+    <div id="ending-screen">
+        <div class="ending-title" id="ending-title"></div>
+        <div class="ending-desc" id="ending-desc"></div>
+        <button class="title-btn" onclick="location.reload()">返回标题</button>
     </div>
 
     <script>
-        function answer(choice) {
-            const result = document.getElementById('result');
-            const buttons = document.querySelector('.buttons');
+        // ===== 游戏引擎 =====
+        const Engine = {
+            currentScene: null,
+            currentLine: 0,
+            isTyping: false,
+            typewriterTimer: null,
+            affection: { anzhiqiang: 0 },
+            flags: {},
+            history: [],
+            unlockedCGs: [],
+            endings: [],
 
-            if (choice === 'yes') {
-                result.textContent = '眼光不错！朱元乐确实很棒！';
-                result.style.color = '#4CAF50';
-            } else {
-                result.textContent = '再想想？朱元乐其实很不错的！';
-                result.style.color = '#f44336';
+            // 背景场景
+            backgrounds: {
+                classroom: 'linear-gradient(180deg, #87CEEB 0%, #F0F8FF 30%, #DEB887 30%, #D2B48C 100%)',
+                hallway: 'linear-gradient(180deg, #87CEEB 0%, #F5F5DC 40%, #D2B48C 100%)',
+                playground: 'linear-gradient(180deg, #87CEEB 0%, #98FB98 50%, #228B22 100%)',
+                street: 'linear-gradient(180deg, #FFA07A 0%, #FFDAB9 30%, #808080 60%, #696969 100%)',
+                river: 'linear-gradient(180deg, #FF6B6B 0%, #FFE66D 20%, #4ECDC4 50%, #45B7D1 100%)',
+                bookstore: 'linear-gradient(180deg, #8B4513 0%, #D2691E 30%, #DEB887 100%)',
+                home: 'linear-gradient(180deg, #FFF8DC 0%, #FAEBD7 50%, #D2B48C 100%)',
+                mountain: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #228B22 100%)',
+                rooftop: 'linear-gradient(180deg, #FF6B6B 0%, #FFA07A 30%, #FFD700 60%, #DEB887 100%)',
+                rainystreet: 'linear-gradient(180deg, #2c3e50 0%, #34495e 30%, #4a6741 60%, #2c3e50 100%)',
+                festival: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 30%, #e94560 60%, #ffd700 100%)',
+                sakura: 'linear-gradient(180deg, #FFB7C5 0%, #FFC0CB 30%, #98FB98 60%, #228B22 100%)',
+                night: 'linear-gradient(180deg, #0c0c1d 0%, #1a1a2e 50%, #16213e 100%)',
+                sunset: 'linear-gradient(180deg, #FF6B6B 0%, #FFA07A 25%, #FFD700 50%, #87CEEB 100%)',
+                library: 'linear-gradient(180deg, #8B4513 0%, #A0522D 30%, #DEB887 60%, #D2B48C 100%)'
+            },
+
+            // 角色定义
+            characters: {
+                zhu: {
+                    name: '朱元乐',
+                    class: 'zhuyuanle',
+                    hairColor: '#2c3e50',
+                    bodyColor: '#3498db',
+                    type: 'protagonist'
+                },
+                an: {
+                    name: '安志强',
+                    class: 'anzhiqiang',
+                    hairColor: '#8e44ad',
+                    bodyColor: '#e74c3c',
+                    type: 'heroine'
+                },
+                lin: {
+                    name: '林小雨',
+                    class: 'linxiaoyu',
+                    hairColor: '#27ae60',
+                    bodyColor: '#2ecc71',
+                    type: 'friend'
+                },
+                wang: {
+                    name: '王浩然',
+                    class: 'wanghaoran',
+                    hairColor: '#e67e22',
+                    bodyColor: '#f39c12',
+                    type: 'friend'
+                },
+                teacher: {
+                    name: '张老师',
+                    class: 'teacher',
+                    hairColor: '#7f8c8d',
+                    bodyColor: '#95a5a6',
+                    type: 'support'
+                }
+            }
+        };
+
+        // ===== 故事脚本 =====
+        const Story = {
+            // 序章：初遇
+            prologue: {
+                chapter: '序章',
+                chapterSub: '初遇的夏天',
+                bg: 'sakura',
+                weather: 'sakura',
+                lines: [
+                    { speaker: 'narrator', text: '那是一个炎热的夏日，蝉鸣声此起彼伏。' },
+                    { speaker: 'narrator', text: '我站在教学楼的走廊上，望着操场上奔跑的身影。' },
+                    { speaker: 'zhu', text: '（又是平凡的一天……）', emotion: 'normal' },
+                    { speaker: 'narrator', text: '就在这时，一个爽朗的声音从身后传来。' },
+                    { speaker: 'an', text: '喂！你就是新转来的朱元乐吧？', emotion: 'normal', position: 'center' },
+                    { speaker: 'zhu', text: '嗯……是的。', emotion: 'normal' },
+                    { speaker: 'an', text: '我叫安志强，是你的同班同学！以后请多关照啦！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '她笑着伸出手，阳光洒在她的脸上。' },
+                    { speaker: 'zhu', text: '（好耀眼的笑容……）', emotion: 'surprised' },
+                    { speaker: 'an', text: '怎么了？发什么呆呀？', emotion: 'normal' },
+                    { speaker: 'zhu', text: '没、没什么……请多关照。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '就这样，我和她的故事开始了。' },
+                    { type: 'choice', choices: [
+                        { text: '主动和她聊天', next: 'ch1_talk', affection: 5 },
+                        { text: '默默跟在她身后', next: 'ch1_follow', affection: 2 }
+                    ]}
+                ]
+            },
+
+            // 第一章：日常
+            ch1_talk: {
+                chapter: '第一章',
+                chapterSub: '校园日常',
+                bg: 'classroom',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '第二天，我早早来到教室。' },
+                    { speaker: 'an', text: '早啊！朱元乐！', emotion: 'happy', position: 'center' },
+                    { speaker: 'zhu', text: '早、早上好……', emotion: 'normal' },
+                    { speaker: 'an', text: '你昨天怎么一个人站在走廊上呀？', emotion: 'normal' },
+                    { speaker: 'zhu', text: '只是……想看看风景。', emotion: 'normal' },
+                    { speaker: 'an', text: '哈哈，你还挺有意思的！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '她坐到我旁边，开始和我聊天。' },
+                    { speaker: 'an', text: '你知道吗？学校后面有条老街，可好看了！', emotion: 'happy' },
+                    { speaker: 'an', text: '放学后我带你去逛逛吧！', emotion: 'happy' },
+                    { type: 'choice', choices: [
+                        { text: '好啊，一起去吧', next: 'ch1_go', affection: 8 },
+                        { text: '今天可能不太方便……', next: 'ch1_refuse', affection: -2 }
+                    ]}
+                ]
+            },
+
+            ch1_follow: {
+                chapter: '第一章',
+                chapterSub: '校园日常',
+                bg: 'hallway',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '我默默地跟在她身后。' },
+                    { speaker: 'an', text: '嗯？你怎么不说话？', emotion: 'normal', position: 'center' },
+                    { speaker: 'zhu', text: '我……不太擅长说话。', emotion: 'normal' },
+                    { speaker: 'an', text: '没关系呀！我话多，正好互补！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '她爽朗地笑了。' },
+                    { speaker: 'an', text: '走吧，我带你去熟悉一下学校！', emotion: 'happy' },
+                    { type: 'goto', next: 'ch1_go' }
+                ]
+            },
+
+            ch1_refuse: {
+                chapter: '第一章',
+                chapterSub: '校园日常',
+                bg: 'classroom',
+                weather: 'none',
+                lines: [
+                    { speaker: 'an', text: '这样啊……那改天吧！', emotion: 'sad' },
+                    { speaker: 'narrator', text: '她看起来有点失望。' },
+                    { speaker: 'zhu', text: '（我是不是说错话了……）', emotion: 'normal' },
+                    { speaker: 'narrator', text: '放学后，我一个人走在回家的路上。' },
+                    { speaker: 'narrator', text: '突然，身后传来熟悉的声音。' },
+                    { speaker: 'an', text: '朱元乐！等等我！', emotion: 'happy', position: 'center' },
+                    { speaker: 'zhu', text: '安志强？你怎么……', emotion: 'surprised' },
+                    { speaker: 'an', text: '我想了想，还是想去！你陪我去嘛！', emotion: 'happy' },
+                    { type: 'goto', next: 'ch1_go' }
+                ]
+            },
+
+            ch1_go: {
+                chapter: '第一章',
+                chapterSub: '老街同行',
+                bg: 'street',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '我们一起走在老街上。' },
+                    { speaker: 'an', text: '看！这家书店可有年头了！', emotion: 'happy', position: 'center' },
+                    { speaker: 'zhu', text: '确实……很有年代感。', emotion: 'normal' },
+                    { speaker: 'an', text: '我小时候经常来这里看书。', emotion: 'happy' },
+                    { speaker: 'narrator', text: '她推开门，铃铛发出清脆的响声。' },
+                    { speaker: 'an', text: '老板！我来啦！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '书店里弥漫着旧书的味道，阳光从窗户洒进来。' },
+                    { speaker: 'an', text: '你喜欢看什么书？', emotion: 'normal' },
+                    { type: 'choice', choices: [
+                        { text: '我喜欢看小说', next: 'ch1_novel', affection: 5 },
+                        { text: '我不太看书', next: 'ch1_nobook', affection: 0 },
+                        { text: '你喜欢的我都想看', next: 'ch1_together', affection: 10 }
+                    ]}
+                ]
+            },
+
+            ch1_novel: {
+                chapter: '第一章',
+                chapterSub: '老街同行',
+                bg: 'bookstore',
+                weather: 'none',
+                lines: [
+                    { speaker: 'zhu', text: '我喜欢看小说。', emotion: 'normal' },
+                    { speaker: 'an', text: '真的吗？我也是！', emotion: 'happy', position: 'center' },
+                    { speaker: 'an', text: '你喜欢什么类型的？', emotion: 'normal' },
+                    { speaker: 'zhu', text: '治愈系的……让人感到温暖的故事。', emotion: 'normal' },
+                    { speaker: 'an', text: '哈哈，和我一样！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '我们聊了很久，发现彼此有很多共同点。' },
+                    { speaker: 'an', text: '时间不早了，该回家了。', emotion: 'normal' },
+                    { speaker: 'an', text: '今天很开心，下次再一起来吧！', emotion: 'happy' },
+                    { type: 'goto', next: 'ch2_start' }
+                ]
+            },
+
+            ch1_nobook: {
+                chapter: '第一章',
+                chapterSub: '老街同行',
+                bg: 'bookstore',
+                weather: 'none',
+                lines: [
+                    { speaker: 'zhu', text: '我不太看书……', emotion: 'normal' },
+                    { speaker: 'an', text: '没关系呀！我可以推荐给你！', emotion: 'happy', position: 'center' },
+                    { speaker: 'narrator', text: '她拉着我在书架间穿梭。' },
+                    { speaker: 'an', text: '这本！这本超好看的！你一定要看！', emotion: 'happy' },
+                    { speaker: 'zhu', text: '好、好的……', emotion: 'normal' },
+                    { speaker: 'narrator', text: '看着她兴奋的样子，我不禁笑了。' },
+                    { type: 'goto', next: 'ch2_start' }
+                ]
+            },
+
+            ch1_together: {
+                chapter: '第一章',
+                chapterSub: '老街同行',
+                bg: 'bookstore',
+                weather: 'none',
+                lines: [
+                    { speaker: 'zhu', text: '你喜欢的……我都想看。', emotion: 'normal' },
+                    { speaker: 'an', text: '诶？', emotion: 'surprised', position: 'center' },
+                    { speaker: 'narrator', text: '她的脸微微泛红。' },
+                    { speaker: 'an', text: '你、你说什么呢！', emotion: 'embarrassed' },
+                    { speaker: 'zhu', text: '我是说……你推荐的书，我都会看的。', emotion: 'normal' },
+                    { speaker: 'an', text: '哼……算你会说话。', emotion: 'embarrassed' },
+                    { speaker: 'narrator', text: '她转过身去，但我看到她嘴角上扬。' },
+                    { type: 'goto', next: 'ch2_start' }
+                ]
+            },
+
+            // 第二章：羁绊
+            ch2_start: {
+                chapter: '第二章',
+                chapterSub: '朝夕相伴',
+                bg: 'classroom',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '日子一天天过去，我和安志强越来越熟悉。' },
+                    { speaker: 'narrator', text: '每天一起上学，一起放学，成了我们的日常。' },
+                    { speaker: 'an', text: '朱元乐！今天体育课跑800米！', emotion: 'normal', position: 'center' },
+                    { speaker: 'zhu', text: '嗯……我不太擅长跑步。', emotion: 'normal' },
+                    { speaker: 'an', text: '没关系！我陪你跑！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '操场上，她真的陪我一起跑。' },
+                    { speaker: 'an', text: '加油！就剩最后一圈了！', emotion: 'happy' },
+                    { speaker: 'zhu', text: '呼……谢谢你……', emotion: 'normal' },
+                    { speaker: 'an', text: '谢什么呀！我们是朋友嘛！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '朋友……吗？' },
+                    { type: 'choice', choices: [
+                        { text: '只是朋友吗……', next: 'ch2_more', affection: 8, flag: 'wish_more' },
+                        { text: '嗯，是朋友', next: 'ch2_friend', affection: 2 }
+                    ]}
+                ]
+            },
+
+            ch2_more: {
+                chapter: '第二章',
+                chapterSub: '朝夕相伴',
+                bg: 'playground',
+                weather: 'none',
+                lines: [
+                    { speaker: 'zhu', text: '只是……朋友吗？', emotion: 'normal' },
+                    { speaker: 'an', text: '诶？', emotion: 'surprised', position: 'center' },
+                    { speaker: 'narrator', text: '她愣住了，然后别过脸去。' },
+                    { speaker: 'an', text: '你、你在说什么呀……', emotion: 'embarrassed' },
+                    { speaker: 'zhu', text: '没什么……当我没说。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '空气突然变得有些微妙。' },
+                    { speaker: 'an', text: '走、走吧！该回教室了！', emotion: 'embarrassed' },
+                    { speaker: 'narrator', text: '她快步走在前面，耳朵红红的。' },
+                    { type: 'goto', next: 'ch2_afternoon' }
+                ]
+            },
+
+            ch2_friend: {
+                chapter: '第二章',
+                chapterSub: '朝夕相伴',
+                bg: 'playground',
+                weather: 'none',
+                lines: [
+                    { speaker: 'zhu', text: '嗯，是朋友。', emotion: 'normal' },
+                    { speaker: 'an', text: '对呀！好朋友！', emotion: 'happy', position: 'center' },
+                    { speaker: 'narrator', text: '她笑着拍了拍我的肩膀。' },
+                    { speaker: 'an', text: '走吧！回教室去！', emotion: 'happy' },
+                    { type: 'goto', next: 'ch2_afternoon' }
+                ]
+            },
+
+            ch2_afternoon: {
+                chapter: '第二章',
+                chapterSub: '放学时光',
+                bg: 'street',
+                weather: 'sunset',
+                lines: [
+                    { speaker: 'narrator', text: '放学后，夕阳把我们的影子拉得很长。' },
+                    { speaker: 'an', text: '朱元乐，你有心事吧？', emotion: 'normal', position: 'center' },
+                    { speaker: 'zhu', text: '……为什么这么问？', emotion: 'surprised' },
+                    { speaker: 'an', text: '直觉！我的直觉很准的！', emotion: 'happy' },
+                    { speaker: 'zhu', text: '……', emotion: 'normal' },
+                    { speaker: 'an', text: '不想说也没关系。', emotion: 'normal' },
+                    { speaker: 'an', text: '但是如果你想说的时候，我随时都在。', emotion: 'happy' },
+                    { speaker: 'zhu', text: '……谢谢你，安志强。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '那一刻，我感到心里暖暖的。' },
+                    { type: 'choice', choices: [
+                        { text: '告诉她关于过去的事', next: 'ch2_tell', affection: 10, flag: 'told_past' },
+                        { text: '还是沉默吧', next: 'ch2_silent', affection: 3 }
+                    ]}
+                ]
+            },
+
+            ch2_tell: {
+                chapter: '第二章',
+                chapterSub: '心事试探',
+                bg: 'river',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '我们走到河边，坐在步道的长椅上。' },
+                    { speaker: 'zhu', text: '其实……我转学是因为……', emotion: 'normal' },
+                    { speaker: 'zhu', text: '以前的学校，发生了一些事。', emotion: 'sad' },
+                    { speaker: 'an', text: '……', emotion: 'normal', position: 'center' },
+                    { speaker: 'zhu', text: '我失去了一个很重要的人。', emotion: 'sad' },
+                    { speaker: 'narrator', text: '安志强静静地听着，没有说话。' },
+                    { speaker: 'zhu', text: '所以……我总是害怕和人亲近。', emotion: 'sad' },
+                    { speaker: 'zhu', text: '害怕再次失去。', emotion: 'sad' },
+                    { speaker: 'an', text: '朱元乐。', emotion: 'normal' },
+                    { speaker: 'an', text: '我不会离开的。', emotion: 'serious' },
+                    { speaker: 'an', text: '我向你保证。', emotion: 'serious' },
+                    { speaker: 'narrator', text: '她的眼神很认真，认真到让我想哭。' },
+                    { speaker: 'zhu', text: '……嗯。', emotion: 'normal' },
+                    { type: 'goto', next: 'ch3_start' }
+                ]
+            },
+
+            ch2_silent: {
+                chapter: '第二章',
+                chapterSub: '心事试探',
+                bg: 'river',
+                weather: 'none',
+                lines: [
+                    { speaker: 'zhu', text: '……', emotion: 'normal' },
+                    { speaker: 'an', text: '没关系，不想说就不说。', emotion: 'normal', position: 'center' },
+                    { speaker: 'an', text: '反正我会一直陪着你的！', emotion: 'happy' },
+                    { speaker: 'zhu', text: '……谢谢你。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '虽然没有说出口，但我心里很感激。' },
+                    { type: 'goto', next: 'ch3_start' }
+                ]
+            },
+
+            // 第三章：心意
+            ch3_start: {
+                chapter: '第三章',
+                chapterSub: '心意相通',
+                bg: 'rooftop',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '不知不觉，夏天快要结束了。' },
+                    { speaker: 'narrator', text: '学校举办夏日祭，到处都是节日的气氛。' },
+                    { speaker: 'an', text: '朱元乐！今晚一起去夏日祭吧！', emotion: 'happy', position: 'center' },
+                    { speaker: 'zhu', text: '夏日祭？', emotion: 'normal' },
+                    { speaker: 'an', text: '对呀！有好多小吃摊，还有烟花！', emotion: 'happy' },
+                    { speaker: 'an', text: '你一定要来！', emotion: 'happy' },
+                    { type: 'choice', choices: [
+                        { text: '好，一起去', next: 'ch3_festival', affection: 10 },
+                        { text: '我考虑一下', next: 'ch3_think', affection: 0 }
+                    ]}
+                ]
+            },
+
+            ch3_think: {
+                chapter: '第三章',
+                chapterSub: '心意相通',
+                bg: 'classroom',
+                weather: 'none',
+                lines: [
+                    { speaker: 'zhu', text: '我考虑一下……', emotion: 'normal' },
+                    { speaker: 'an', text: '诶？还要考虑吗？', emotion: 'surprised', position: 'center' },
+                    { speaker: 'zhu', text: '嗯……', emotion: 'normal' },
+                    { speaker: 'an', text: '好吧……那你想好了告诉我！', emotion: 'sad' },
+                    { speaker: 'narrator', text: '看着她失落的背影，我心里有些难受。' },
+                    { speaker: 'narrator', text: '放学后，我独自走在回家的路上。' },
+                    { speaker: 'narrator', text: '突然下起了雨。' },
+                    { speaker: 'zhu', text: '糟糕……没带伞。', emotion: 'normal' },
+                    { speaker: 'an', text: '朱元乐！', emotion: 'normal', position: 'center' },
+                    { speaker: 'narrator', text: '她撑着伞跑过来。' },
+                    { speaker: 'an', text: '我就知道你没带伞！', emotion: 'happy' },
+                    { speaker: 'zhu', text: '安志强……', emotion: 'surprised' },
+                    { speaker: 'an', text: '走吧，我送你回家。', emotion: 'happy' },
+                    { speaker: 'narrator', text: '雨夜中，我们并肩而行。' },
+                    { type: 'goto', next: 'ch3_festival' }
+                ]
+            },
+
+            ch3_festival: {
+                chapter: '第三章',
+                chapterSub: '夏日祭',
+                bg: 'festival',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '夏日祭的夜晚，灯火通明。' },
+                    { speaker: 'an', text: '哇！好热闹啊！', emotion: 'happy', position: 'center' },
+                    { speaker: 'zhu', text: '嗯……', emotion: 'normal' },
+                    { speaker: 'an', text: '走走走！我们去吃苹果糖！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '她拉着我的手，在人群中穿梭。' },
+                    { speaker: 'an', text: '给你！', emotion: 'happy' },
+                    { speaker: 'zhu', text: '谢谢……', emotion: 'normal' },
+                    { speaker: 'narrator', text: '我们一边吃着小吃，一边逛着摊位。' },
+                    { speaker: 'an', text: '朱元乐，你看！是捞金鱼！', emotion: 'happy' },
+                    { speaker: 'an', text: '我们来比赛！', emotion: 'happy' },
+                    { speaker: 'zhu', text: '好。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '结果，她捞了5条，我一条都没捞到。' },
+                    { speaker: 'an', text: '哈哈！你太菜了！', emotion: 'happy' },
+                    { speaker: 'zhu', text: '……', emotion: 'normal' },
+                    { speaker: 'an', text: '好啦好啦，分你两条！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '夜空中，烟花开始绽放。' },
+                    { speaker: 'an', text: '哇……好美。', emotion: 'happy' },
+                    { speaker: 'narrator', text: '我看着她被烟花照亮的侧脸。' },
+                    { speaker: 'zhu', text: '（是啊……好美。）', emotion: 'normal' },
+                    { type: 'choice', choices: [
+                        { text: '握住她的手', next: 'ch3_hand', affection: 15, flag: 'held_hand' },
+                        { text: '继续看烟花', next: 'ch3_watch', affection: 5 }
+                    ]}
+                ]
+            },
+
+            ch3_hand: {
+                chapter: '第三章',
+                chapterSub: '夏日祭',
+                bg: 'festival',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '我深吸一口气，握住了她的手。' },
+                    { speaker: 'an', text: '！', emotion: 'surprised', position: 'center' },
+                    { speaker: 'narrator', text: '她转过头，脸红红的。' },
+                    { speaker: 'an', text: '朱、朱元乐……？', emotion: 'embarrassed' },
+                    { speaker: 'zhu', text: '……可以吗？', emotion: 'normal' },
+                    { speaker: 'narrator', text: '她没有挣脱，反而握紧了我的手。' },
+                    { speaker: 'an', text: '……笨蛋。', emotion: 'embarrassed' },
+                    { speaker: 'narrator', text: '烟花在头顶绽放，我们的手紧紧相握。' },
+                    { type: 'goto', next: 'ch4_start' }
+                ]
+            },
+
+            ch3_watch: {
+                chapter: '第三章',
+                chapterSub: '夏日祭',
+                bg: 'festival',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '我们静静地站在人群中，看着烟花。' },
+                    { speaker: 'an', text: '朱元乐。', emotion: 'normal', position: 'center' },
+                    { speaker: 'zhu', text: '嗯？', emotion: 'normal' },
+                    { speaker: 'an', text: '今天……很开心。', emotion: 'happy' },
+                    { speaker: 'zhu', text: '嗯，我也是。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '烟花照亮了夜空，也照亮了我们的心。' },
+                    { type: 'goto', next: 'ch4_start' }
+                ]
+            },
+
+            // 第四章：告白
+            ch4_start: {
+                chapter: '第四章',
+                chapterSub: '星空共处',
+                bg: 'mountain',
+                weather: 'stars',
+                lines: [
+                    { speaker: 'narrator', text: '暑假的最后一天，我们约好去看星星。' },
+                    { speaker: 'an', text: '快点快点！要赶不上了！', emotion: 'happy', position: 'center' },
+                    { speaker: 'zhu', text: '别急……星星又不会跑。', emotion: 'normal' },
+                    { speaker: 'an', text: '但是位置会被抢走呀！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '我们爬上山顶，满天繁星映入眼帘。' },
+                    { speaker: 'an', text: '哇……好美。', emotion: 'happy' },
+                    { speaker: 'zhu', text: '嗯……', emotion: 'normal' },
+                    { speaker: 'narrator', text: '我们躺在草地上，仰望星空。' },
+                    { speaker: 'an', text: '朱元乐，你有想过未来吗？', emotion: 'normal' },
+                    { speaker: 'zhu', text: '未来？', emotion: 'normal' },
+                    { speaker: 'an', text: '嗯，以后想做什么，想成为什么样的人。', emotion: 'normal' },
+                    { type: 'choice', choices: [
+                        { text: '想和你在一起', next: 'ch4_confess', affection: 20, flag: 'confessed' },
+                        { text: '还没想过', next: 'ch4_notyet', affection: 0 }
+                    ]}
+                ]
+            },
+
+            ch4_confess: {
+                chapter: '第四章',
+                chapterSub: '心意相通',
+                bg: 'night',
+                weather: 'stars',
+                lines: [
+                    { speaker: 'zhu', text: '我……', emotion: 'normal' },
+                    { speaker: 'zhu', text: '想和你在一起。', emotion: 'normal' },
+                    { speaker: 'an', text: '……', emotion: 'surprised', position: 'center' },
+                    { speaker: 'narrator', text: '她愣住了，然后慢慢地转过头。' },
+                    { speaker: 'an', text: '你……说什么？', emotion: 'embarrassed' },
+                    { speaker: 'zhu', text: '安志强，我喜欢你。', emotion: 'normal' },
+                    { speaker: 'zhu', text: '从第一次见面开始。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '她的眼眶红了。' },
+                    { speaker: 'an', text: '笨蛋……你怎么现在才说。', emotion: 'embarrassed' },
+                    { speaker: 'zhu', text: '诶？', emotion: 'surprised' },
+                    { speaker: 'an', text: '我也是……我也喜欢你。', emotion: 'embarrassed' },
+                    { speaker: 'an', text: '从很久以前就开始了。', emotion: 'embarrassed' },
+                    { speaker: 'narrator', text: '星空下，我们相视而笑。' },
+                    { speaker: 'narrator', text: '那一刻，整个世界都亮了。' },
+                    { type: 'choice', choices: [
+                        { text: '拥抱她', next: 'ending_hug', affection: 30, flag: 'ending_hug' },
+                        { text: '牵起她的手', next: 'ending_hand', affection: 25, flag: 'ending_hand' }
+                    ]}
+                ]
+            },
+
+            ch4_notyet: {
+                chapter: '第四章',
+                chapterSub: '星空共处',
+                bg: 'night',
+                weather: 'stars',
+                lines: [
+                    { speaker: 'zhu', text: '还没想过……', emotion: 'normal' },
+                    { speaker: 'an', text: '这样啊……', emotion: 'sad', position: 'center' },
+                    { speaker: 'narrator', text: '她的声音听起来有些失落。' },
+                    { speaker: 'an', text: '那……你有没有想过，关于我？', emotion: 'normal' },
+                    { speaker: 'zhu', text: '安志强……', emotion: 'surprised' },
+                    { speaker: 'an', text: '算了！当我没问！', emotion: 'embarrassed' },
+                    { speaker: 'narrator', text: '她别过脸去，但我看到她耳朵红红的。' },
+                    { speaker: 'zhu', text: '（我真是个笨蛋……）', emotion: 'normal' },
+                    { speaker: 'narrator', text: '回家的路上，我们都没说话。' },
+                    { speaker: 'narrator', text: '但在分别的时候——' },
+                    { speaker: 'an', text: '朱元乐！', emotion: 'normal', position: 'center' },
+                    { speaker: 'zhu', text: '嗯？', emotion: 'normal' },
+                    { speaker: 'an', text: '明天见！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '她笑着挥了挥手，转身跑开了。' },
+                    { speaker: 'zhu', text: '……明天见。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '我望着她的背影，心里默默做了一个决定。' },
+                    { type: 'goto', next: 'ending_friend' }
+                ]
+            },
+
+            // 结局
+            ending_hug: {
+                chapter: '终章',
+                chapterSub: '相守相伴',
+                bg: 'night',
+                weather: 'stars',
+                lines: [
+                    { speaker: 'narrator', text: '我轻轻地抱住了她。' },
+                    { speaker: 'an', text: '……', emotion: 'embarrassed', position: 'center' },
+                    { speaker: 'an', text: '笨蛋……', emotion: 'embarrassed' },
+                    { speaker: 'zhu', text: '安志强，以后也请多关照。', emotion: 'normal' },
+                    { speaker: 'an', text: '嗯……请多关照。', emotion: 'happy' },
+                    { speaker: 'narrator', text: '星空下，我们紧紧相拥。' },
+                    { speaker: 'narrator', text: '这个夏天，是我人生中最美好的夏天。' },
+                    { speaker: 'narrator', text: '因为遇见了你。' },
+                    { type: 'ending', ending: '相守相伴', desc: '星空下的拥抱，是故事最美的结局。' }
+                ]
+            },
+
+            ending_hand: {
+                chapter: '终章',
+                chapterSub: '心意相通',
+                bg: 'night',
+                weather: 'stars',
+                lines: [
+                    { speaker: 'narrator', text: '我牵起她的手。' },
+                    { speaker: 'an', text: '……', emotion: 'embarrassed', position: 'center' },
+                    { speaker: 'zhu', text: '以后，也请多多指教。', emotion: 'normal' },
+                    { speaker: 'an', text: '嗯……多多指教。', emotion: 'happy' },
+                    { speaker: 'narrator', text: '我们十指相扣，一起望着星空。' },
+                    { speaker: 'narrator', text: '未来还有很长的路要走。' },
+                    { speaker: 'narrator', text: '但只要有你在身边，我什么都不怕。' },
+                    { type: 'ending', ending: '心意相通', desc: '十指相扣，心意相通，是最美的告白。' }
+                ]
+            },
+
+            ending_friend: {
+                chapter: '终章',
+                chapterSub: '挚友长存',
+                bg: 'sunset',
+                weather: 'none',
+                lines: [
+                    { speaker: 'narrator', text: '新学期开始了。' },
+                    { speaker: 'an', text: '朱元乐！早上好！', emotion: 'happy', position: 'center' },
+                    { speaker: 'zhu', text: '早上好，安志强。', emotion: 'normal' },
+                    { speaker: 'narrator', text: '我们的关系，还是和以前一样。' },
+                    { speaker: 'narrator', text: '但有些东西，悄悄地改变了。' },
+                    { speaker: 'zhu', text: '安志强，放学后……我有话想跟你说。', emotion: 'normal' },
+                    { speaker: 'an', text: '诶？什么话？', emotion: 'surprised' },
+                    { speaker: 'zhu', text: '到时候你就知道了。', emotion: 'normal' },
+                    { speaker: 'an', text: '神神秘秘的……好吧！', emotion: 'happy' },
+                    { speaker: 'narrator', text: '我看着她的笑容，心里充满了勇气。' },
+                    { speaker: 'narrator', text: '这一次，我不会再错过了。' },
+                    { type: 'ending', ending: '挚友长存', desc: '有些心意，需要时间来酝酿。但终有一天，会开花结果。' }
+                ]
+            }
+        };
+
+        // ===== 游戏逻辑 =====
+        function startGame() {
+            document.getElementById('title-screen').classList.add('hidden');
+            document.getElementById('game-container').classList.add('active');
+            loadScene('prologue');
+        }
+
+        function loadScene(sceneName) {
+            const scene = Story[sceneName];
+            if (!scene) return;
+
+            Engine.currentScene = sceneName;
+            Engine.currentLine = 0;
+
+            // 显示章节标题
+            if (scene.chapter) {
+                showChapter(scene.chapter, scene.chapterSub);
             }
 
-            result.classList.add('show');
-            buttons.style.display = 'none';
+            // 设置背景
+            setTimeout(() => {
+                setBackground(scene.bg);
+                setWeather(scene.weather);
+                showLine();
+            }, scene.chapter ? 2500 : 500);
         }
+
+        function showChapter(name, sub) {
+            const el = document.getElementById('chapter-title');
+            document.getElementById('chapter-name').textContent = name;
+            document.getElementById('chapter-sub').textContent = sub;
+            el.classList.add('active');
+            setTimeout(() => el.classList.remove('active'), 2500);
+        }
+
+        function setBackground(bgName) {
+            const bg = Engine.backgrounds[bgName] || Engine.backgrounds.classroom;
+            document.getElementById('bg-layer').style.background = bg;
+        }
+
+        function setWeather(type) {
+            const layer = document.getElementById('weather-layer');
+            layer.innerHTML = '';
+
+            if (type === 'rain') {
+                for (let i = 0; i < 100; i++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.style.left = Math.random() * 100 + '%';
+                    drop.style.height = Math.random() * 20 + 10 + 'px';
+                    drop.style.animationDuration = Math.random() * 0.5 + 0.5 + 's';
+                    drop.style.animationDelay = Math.random() * 2 + 's';
+                    layer.appendChild(drop);
+                }
+            } else if (type === 'stars') {
+                for (let i = 0; i < 50; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 60 + '%';
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    star.style.width = Math.random() * 3 + 1 + 'px';
+                    star.style.height = star.style.width;
+                    layer.appendChild(star);
+                }
+            } else if (type === 'sakura') {
+                for (let i = 0; i < 30; i++) {
+                    const sakura = document.createElement('div');
+                    sakura.className = 'sakura';
+                    sakura.style.left = Math.random() * 100 + '%';
+                    sakura.style.animationDuration = Math.random() * 3 + 4 + 's';
+                    sakura.style.animationDelay = Math.random() * 5 + 's';
+                    layer.appendChild(sakura);
+                }
+            }
+        }
+
+        function showLine() {
+            const scene = Story[Engine.currentScene];
+            if (!scene || Engine.currentLine >= scene.lines.length) return;
+
+            const line = scene.lines[Engine.currentLine];
+
+            // 处理特殊类型
+            if (line.type === 'choice') {
+                showChoices(line.choices);
+                return;
+            }
+            if (line.type === 'goto') {
+                loadScene(line.next);
+                return;
+            }
+            if (line.type === 'ending') {
+                showEnding(line.ending, line.desc);
+                return;
+            }
+
+            // 显示角色
+            if (line.position) {
+                showCharacter(line.speaker, line.position, line.emotion);
+            }
+
+            // 显示对话
+            const nameEl = document.getElementById('speaker-name');
+            const textEl = document.getElementById('dialogue-text');
+
+            if (line.speaker === 'narrator') {
+                nameEl.style.display = 'none';
+                nameEl.textContent = '';
+            } else {
+                nameEl.style.display = 'block';
+                const char = Engine.characters[line.speaker];
+                nameEl.textContent = char ? char.name : line.speaker;
+            }
+
+            // 打字机效果
+            typewriter(textEl, line.text);
+        }
+
+        function typewriter(element, text) {
+            Engine.isTyping = true;
+            element.textContent = '';
+            let i = 0;
+
+            clearInterval(Engine.typewriterTimer);
+            Engine.typewriterTimer = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text[i];
+                    i++;
+                } else {
+                    clearInterval(Engine.typewriterTimer);
+                    Engine.isTyping = false;
+                }
+            }, 50);
+        }
+
+        function showCharacter(id, position, emotion) {
+            const layer = document.getElementById('character-layer');
+            layer.innerHTML = '';
+
+            const char = Engine.characters[id];
+            if (!char) return;
+
+            const el = document.createElement('div');
+            el.className = `character ${char.class} ${position}`;
+            el.innerHTML = `
+                <div class="char-body">
+                    <div class="char-hair"></div>
+                    <div class="char-head"></div>
+                    <div class="char-eyes">
+                        <div class="eye ${emotion === 'happy' ? 'happy' : ''}"></div>
+                        <div class="eye ${emotion === 'happy' ? 'happy' : ''}"></div>
+                    </div>
+                    <div class="char-mouth ${emotion === 'happy' ? 'smile' : emotion === 'sad' ? 'sad' : ''}"></div>
+                </div>
+            `;
+            layer.appendChild(el);
+        }
+
+        function showChoices(choices) {
+            const overlay = document.getElementById('choices-overlay');
+            const container = document.getElementById('choices-container');
+            container.innerHTML = '';
+
+            choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = choice.text;
+                btn.onclick = () => {
+                    overlay.classList.remove('active');
+                    if (choice.affection) {
+                        Engine.affection.anzhiqiang += choice.affection;
+                    }
+                    if (choice.flag) {
+                        Engine.flags[choice.flag] = true;
+                    }
+                    Engine.history.push({ scene: Engine.currentScene, choice: index });
+                    loadScene(choice.next);
+                };
+                container.appendChild(btn);
+            });
+
+            overlay.classList.add('active');
+        }
+
+        function showEnding(name, desc) {
+            const el = document.getElementById('ending-screen');
+            document.getElementById('ending-title').textContent = `结局：${name}`;
+            document.getElementById('ending-desc').textContent = desc;
+            el.classList.add('active');
+
+            // 保存结局
+            if (!Engine.endings.includes(name)) {
+                Engine.endings.push(name);
+                localStorage.setItem('galgame_endings', JSON.stringify(Engine.endings));
+            }
+        }
+
+        // 点击继续
+        document.getElementById('dialogue-box').addEventListener('click', () => {
+            if (Engine.isTyping) {
+                clearInterval(Engine.typewriterTimer);
+                Engine.isTyping = false;
+                const scene = Story[Engine.currentScene];
+                const line = scene.lines[Engine.currentLine];
+                document.getElementById('dialogue-text').textContent = line.text;
+                return;
+            }
+
+            Engine.currentLine++;
+            showLine();
+        });
+
+        // 存档系统
+        function toggleSave() {
+            const overlay = document.getElementById('save-overlay');
+            overlay.classList.toggle('active');
+            if (overlay.classList.contains('active')) {
+                renderSaveSlots();
+            }
+        }
+
+        function renderSaveSlots() {
+            const container = document.getElementById('save-slots');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= 4; i++) {
+                const save = localStorage.getItem(`galgame_save_${i}`);
+                const data = save ? JSON.parse(save) : null;
+
+                const slot = document.createElement('div');
+                slot.className = 'save-slot';
+                slot.innerHTML = `
+                    <div class="save-slot-title">存档 ${i}</div>
+                    <div class="save-slot-info">${data ? `${data.scene} - 好感度: ${data.affection}` : '空'}</div>
+                `;
+                slot.onclick = () => {
+                    if (data) {
+                        loadSave(data);
+                    } else {
+                        saveGame(i);
+                    }
+                    toggleSave();
+                };
+                container.appendChild(slot);
+            }
+        }
+
+        function saveGame(slot) {
+            const data = {
+                scene: Engine.currentScene,
+                line: Engine.currentLine,
+                affection: Engine.affection.anzhiqiang,
+                flags: Engine.flags,
+                timestamp: new Date().toLocaleString()
+            };
+            localStorage.setItem(`galgame_save_${slot}`, JSON.stringify(data));
+        }
+
+        function loadSave(data) {
+            Engine.affection.anzhiqiang = data.affection;
+            Engine.flags = data.flags || {};
+            loadScene(data.scene);
+        }
+
+        function loadGame() {
+            const saves = [];
+            for (let i = 1; i <= 4; i++) {
+                const save = localStorage.getItem(`galgame_save_${i}`);
+                if (save) saves.push(JSON.parse(save));
+            }
+            if (saves.length > 0) {
+                // 加载最新的存档
+                loadSave(saves[saves.length - 1]);
+                document.getElementById('title-screen').classList.add('hidden');
+                document.getElementById('game-container').classList.add('active');
+            } else {
+                alert('没有找到存档！');
+            }
+        }
+
+        // CG 系统
+        function showCG() {
+            const overlay = document.getElementById('cg-overlay');
+            overlay.classList.add('active');
+
+            const cgScene = document.getElementById('cg-scene');
+            const cgText = document.getElementById('cg-text');
+
+            const endings = JSON.parse(localStorage.getItem('galgame_endings') || '[]');
+            if (endings.length === 0) {
+                cgScene.textContent = '🔒';
+                cgText.textContent = '还没有解锁任何结局';
+            } else {
+                cgScene.textContent = '🌸';
+                cgText.textContent = `已解锁结局：${endings.join('、')}`;
+            }
+        }
+
+        function closeCG() {
+            document.getElementById('cg-overlay').classList.remove('active');
+        }
+
+        // 快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Enter') {
+                document.getElementById('dialogue-box').click();
+            }
+            if (e.key === 'Escape') {
+                toggleSave();
+            }
+        });
     </script>
 </body>
 </html>
