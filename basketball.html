@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>去打球吗？</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            font-family: "Microsoft YaHei", sans-serif;
+            transition: background 0.5s;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            transition: all 0.3s;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 35px;
+            font-size: 32px;
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 18px 50px;
+            font-size: 22px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-go {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-go:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .btn-no:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(244, 67, 54, 0.5);
+        }
+
+        .result {
+            margin-top: 30px;
+            font-size: 36px;
+            color: #4CAF50;
+            display: none;
+            animation: popIn 0.5s ease-out;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-10px); }
+            80% { transform: translateX(10px); }
+        }
+
+        .repeat-msg {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #f44336;
+            display: none;
+        }
+
+        .repeat-msg.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="emoji">🏀</div>
+        <h1>去打球吗？</h1>
+        <div class="buttons" id="buttons">
+            <button class="btn-go" onclick="choose('go')">去</button>
+            <button class="btn-no" onclick="choose('no')">不去</button>
+        </div>
+        <div class="result" id="result">OK 👍</div>
+        <div class="repeat-msg" id="repeat-msg">再想想？去吧去吧！🏀</div>
+    </div>
+
+    <script>
+        let count = 0;
+
+        function choose(choice) {
+            const container = document.getElementById('container');
+            const buttons = document.getElementById('buttons');
+            const result = document.getElementById('result');
+            const repeatMsg = document.getElementById('repeat-msg');
+
+            if (choice === 'go') {
+                buttons.style.display = 'none';
+                repeatMsg.classList.remove('show');
+                result.classList.add('show');
+            } else {
+                count++;
+                container.classList.add('shake');
+                setTimeout(() => container.classList.remove('shake'), 500);
+
+                repeatMsg.textContent = getRepeatMessage(count);
+                repeatMsg.classList.add('show');
+            }
+        }
+
+        function getRepeatMessage(count) {
+            const messages = [
+                '再想想？去吧去吧！🏀',
+                '真的不去吗？很好玩的！',
+                '求你了，一起去吧！🥺',
+                '你确定？最后一次机会！',
+                '好吧好吧，你赢了... 才怪！去不去？',
+                '我会一直问的！去打球吗？',
+                '打球有益健康！去吧！💪',
+                '你再点不去试试？😏'
+            ];
+            return messages[Math.min(count - 1, messages.length - 1)];
+        }
+    </script>
+</body>
+</html>
