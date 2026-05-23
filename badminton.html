@@ -129,8 +129,8 @@
 </head>
 <body>
     <div class="container" id="container">
-        <div class="emoji">🏀</div>
-        <h1>去打球吗？</h1>
+        <div class="emoji">🏸</div>
+        <h1>去打羽毛球吗？</h1>
         <div class="buttons" id="buttons">
             <button class="btn-go" onclick="choose('go')">去</button>
             <button class="btn-no" onclick="choose('no')">不去</button>
@@ -164,13 +164,13 @@
 
         function getRepeatMessage(count) {
             const messages = [
-                '再想想？去吧去吧！🏀',
+                '再想想？去吧去吧！🏸',
                 '真的不去吗？很好玩的！',
                 '求你了，一起去吧！🥺',
                 '你确定？最后一次机会！',
                 '好吧好吧，你赢了... 才怪！去不去？',
-                '我会一直问的！去打球吗？',
-                '打球有益健康！去吧！💪',
+                '我会一直问的！去打羽毛球吗？',
+                '打羽毛球有益健康！去吧！💪',
                 '你再点不去试试？😏'
             ];
             return messages[Math.min(count - 1, messages.length - 1)];
